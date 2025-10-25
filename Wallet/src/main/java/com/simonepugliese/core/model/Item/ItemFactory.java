@@ -8,6 +8,11 @@ public abstract class ItemFactory extends Item{
     }
 
     @Override
+    public Object getId() {
+        return super.getId();
+    }
+
+    @Override
     public List<Field> getFields(){
         return super.getFields();
     }

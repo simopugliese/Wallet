@@ -3,19 +3,21 @@ package com.simonepugliese.core.model.Item;
 import java.util.List;
 
 public class CreditCardFactory extends ItemFactory{
-    private Field ownerField;
-    private Field bankField;
-    private Field numberField;
-    private Field cvvField;
-    private Field expirationField;
+    private Field ownerField = new NullField();
+    private Field bankField = new NullField();
+    private Field numberField = new NullField();
+    private Field cvvField = new NullField();
+    private Field expirationField = new NullField();
+    private Field notesField = new NullField();
 
-    public CreditCardFactory(Object id, String owner, String bank, int number, int cvv, String expiration) {
-        super((Object) id, ItemType.CREDITCARD);
+    public CreditCardFactory(Object id, String owner, String bank, String number, int cvv, String expiration, String notes) {
+        super(id, ItemType.CREDITCARD);
         setOwnerField(owner);
         setBankField(bank);
         setNumberField(number);
         setCvvField(cvv);
         setExpirationField(expiration);
+        setNotesField(notes);
     }
 
     @Override
@@ -23,7 +25,7 @@ public class CreditCardFactory extends ItemFactory{
         return super.getId();
     }
 
-    public String getOwner() {
+    public String getOwnerField() {
         return ownerField.getField().toString();
     }
 
@@ -41,17 +43,17 @@ public class CreditCardFactory extends ItemFactory{
         updateList();
     }
 
-    public int getNumberField() {
-        return (int) numberField.getField();
+    public String getNumberField() {
+        return numberField.getField().toString();
     }
 
-    public void setNumberField(int number) {
-        this.numberField = new Field(FieldType.INT, (Object) number, super.getId());
+    public void setNumberField(String number) {
+        this.numberField = new Field(FieldType.STRING, (Object) number, super.getId());
         updateList();
     }
 
-    public int getCvvField() {
-        return (int) cvvField.getField();
+    public String getCvvField() {
+        return cvvField.getField().toString();
     }
 
     public void setCvvField(int cvv) {
@@ -68,7 +70,28 @@ public class CreditCardFactory extends ItemFactory{
         updateList();
     }
 
+    public String getNotesField(){
+        return notesField.getField().toString();
+    }
+
+    public void setNotesField(String notes){
+        this.notesField = new Field(FieldType.STRING, (Object) notes, super.getId());
+        updateList();
+    }
+
     private void updateList(){
-        super.setFields(List.of(ownerField,bankField,numberField,cvvField,expirationField));
+        super.setFields(List.of(ownerField,bankField,numberField,cvvField,expirationField,notesField));
+    }
+
+    @Override
+    public String toString() {
+        return "CreditCardFactory{" +
+                "ownerField=" + getOwnerField() +
+                ", bankField=" + getBankField() +
+                ", numberField=" + getNumberField() +
+                ", cvvField=" + getCvvField() +
+                ", expirationField=" + getExpirationField() +
+                ", notesField=" + getNotesField() +
+                '}';
     }
 }

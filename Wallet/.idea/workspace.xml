@@ -6,10 +6,10 @@
   <component name="ChangeListManager">
     <list default="true" id="1bca0ee2-7bab-4d1d-812a-7e32be3dc1ea" name="Changes" comment="modified item">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/simonepugliese/core/model/Field.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/simonepugliese/core/model/Item/Field.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/simonepugliese/core/model/FieldType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/simonepugliese/core/model/Item/FieldType.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/simonepugliese/core/model/Item.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/simonepugliese/core/model/Item/Item.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/simonepugliese/core/model/ItemType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/simonepugliese/core/model/Item/ItemType.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/simonepugliese/core/model/Item/CreditCardFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/simonepugliese/core/model/Item/CreditCardFactory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/simonepugliese/core/model/Item/FieldType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/simonepugliese/core/model/Item/FieldType.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/simonepugliese/core/model/Item/ItemFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/simonepugliese/core/model/Item/ItemFactory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/simonepugliese/main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/simonepugliese/main.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -53,13 +53,14 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "Application.Field.executor": "Run",
+    "Application.main.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
     "git-widget-placeholder": "main",
     "kotlin-language-version-configured": "true"
   }
 }]]></component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Application.main">
     <configuration name="Field" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.simonepugliese.core.model.Item.Field" />
       <module name="Wallet" />
@@ -73,8 +74,22 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.simonepugliese.main" />
+      <module name="Wallet" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.simonepugliese.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.main" />
         <item itemvalue="Application.Field" />
       </list>
     </recent_temporary>
@@ -104,7 +119,15 @@
       <option name="project" value="LOCAL" />
       <updated>1761382111731</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="modified item">
+      <option name="closed" value="true" />
+      <created>1761385958335</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1761385958335</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
