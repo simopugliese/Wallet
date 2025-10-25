@@ -1,25 +1,25 @@
 package com.simonepugliese.core.model;
 
-import java.util.HashMap;
+import java.util.List;
 
 public class Item {
-    private ItemType itemType;
-    private HashMap<String, FieldType> fields;
+    private Object id;
+    private List<Field> fields;
 
-    public Item(ItemType itemType, HashMap<String, FieldType> fields) {
-        this.itemType = itemType;
+    public Item(Object id, List<Field> fields) {
+        this.id = id;
         this.fields = fields;
     }
 
-    public ItemType getItemType() {
-        return itemType;
+    public Object getId() {
+        return id;
     }
 
-    public HashMap<String, FieldType> getFields() {
+    public List<Field> getFields() {
         return fields;
     }
 
-    public void setFields(HashMap<String, FieldType> fields) {
+    public void setFields(List<Field> fields) {
         this.fields = fields;
     }
 }
