@@ -1,12 +1,14 @@
-package com.simonepugliese.core.model;
+package com.simonepugliese.core.model.Item;
 
-public class Field {
+class Field {
     private FieldType fieldType;
     private Object field;
+    private Object id; //id of the item
 
-    public Field(FieldType fieldType, Object field) {
+    protected Field(FieldType fieldType, Object field, Object id) {
         this.fieldType = fieldType;
         this.field = field;
+        this.id = id;
     }
 
     public FieldType getFieldType() {
@@ -23,5 +25,13 @@ public class Field {
 
     public void setField(Object field) {
         this.field = field;
+    }
+
+    public Object getId() {
+        return id;
+    }
+
+    public void setId(Object id) {
+        this.id = id;
     }
 }
