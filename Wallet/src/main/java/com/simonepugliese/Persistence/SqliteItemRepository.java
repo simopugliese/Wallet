@@ -8,12 +8,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SqliteItemRepository implements ItemRepository {
+    private static volatile SqliteItemRepository instance;
 
     private final String url = "jdbc:sqlite:wallet.db";
-
     private Connection conn;
 
-    public SqliteItemRepository() {
+    private SqliteItemRepository() {
         try {
             this.conn = DriverManager.getConnection(url);
             if (this.conn != null) {
@@ -22,6 +22,17 @@ public class SqliteItemRepository implements ItemRepository {
         } catch (SQLException e) {
             System.err.println("Errore connessione DB: " + e.getMessage());
         }
+    }
+
+    public static SqliteItemRepository getInstance() {
+        if (instance == null) {
+            synchronized (SqliteItemRepository.class) {
+                if (instance == null) {
+                    instance = new SqliteItemRepository();
+                }
+            }
+        }
+        return instance;
     }
 
     @Override
@@ -90,7 +101,7 @@ public class SqliteItemRepository implements ItemRepository {
                 LoginBasicItem login = new LoginBasicItem(
                         rs.getInt("id"),
                         rs.getString("username"),
-                        rs.getString("password"), // La Logica (Libreria 3) dovrà decifrarla
+                        rs.getString("password"),
                         rs.getString("urlSito"),
                         rs.getString("note")
                 );
@@ -104,36 +115,86 @@ public class SqliteItemRepository implements ItemRepository {
 
     @Override
     public void salvaCreditCards(CreditCardItem carta) {
-        // DA IMPLEMENTARE:
-        // String sql = "INSERT OR REPLACE INTO Carte (id, owner, bank, ...) VALUES(?, ?, ?, ...)";
-        // ...
-        System.out.println("Metodo salvaCarta non ancora implementato.");
+        String sql = "INSERT OR REPLACE INTO CreditCards (id, owner, bank, number, cvv, expiration, note) "
+                + "VALUES(?, ?, ?, ?, ?, ?, ?)";
+
+        try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setInt(1, carta.getId());
+            pstmt.setString(2, carta.getOwner());
+            pstmt.setString(3, carta.getBank());
+            pstmt.setString(4, carta.getNumber());
+            pstmt.setInt(5, carta.getCvv());
+            pstmt.setString(6, carta.getExpiration());
+            pstmt.setString(7, carta.getNote());
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            System.err.println("Errore salvataggio Carta: " + e.getMessage());
+        }
     }
 
     @Override
     public List<CreditCardItem> caricaTutteCreditCards() {
-        // DA IMPLEMENTARE:
-        // String sql = "SELECT * FROM Carte";
-        // ...
-        System.out.println("Metodo caricaTutteCarte non ancora implementato.");
-        return new ArrayList<>();
+        String sql = "SELECT * FROM CreditCards";
+        List<CreditCardItem> carte = new ArrayList<>();
+
+        try (Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+
+            while (rs.next()) {
+                CreditCardItem carta = new CreditCardItem(
+                        rs.getInt("id"),
+                        rs.getString("owner"),
+                        rs.getString("bank"),
+                        rs.getString("number"),
+                        rs.getInt("cvv"),
+                        rs.getString("expiration"),
+                        rs.getString("note")
+                );
+                carte.add(carta);
+            }
+        } catch (SQLException e) {
+            System.err.println("Errore caricamento Carte: " + e.getMessage());
+        }
+        return carte;
     }
 
     @Override
     public void salvaWifisBasic(WifiBasicItem wifi) {
-        // DA IMPLEMENTARE:
-        // String sql = "INSERT OR REPLACE INTO Wifi (id, ssid, password, note) VALUES(?, ?, ?, ?)";
-        // ...
-        System.out.println("Metodo salvaWifi non ancora implementato.");
+        String sql = "INSERT OR REPLACE INTO WifisBasic (id, ssid, password, note) "
+                + "VALUES(?, ?, ?, ?)";
+
+        try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setInt(1, wifi.getId());
+            pstmt.setString(2, wifi.getSsid());
+            pstmt.setString(3, wifi.getPassword());
+            pstmt.setString(4, wifi.getNote());
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            System.err.println("Errore salvataggio Wifi: " + e.getMessage());
+        }
     }
 
     @Override
     public List<WifiBasicItem> caricaTuttiWifisBasic() {
-        // DA IMPLEMENTARE:
-        // String sql = "SELECT * FROM Wifi";
-        // ...
-        System.out.println("Metodo caricaTuttiWifi non ancora implementato.");
-        return new ArrayList<>();
+        String sql = "SELECT * FROM WifisBasic";
+        List<WifiBasicItem> wifiList = new ArrayList<>();
+
+        try (Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+
+            while (rs.next()) {
+                WifiBasicItem wifi = new WifiBasicItem(
+                        rs.getInt("id"),
+                        rs.getString("ssid"),
+                        rs.getString("password"),
+                        rs.getString("note")
+                );
+                wifiList.add(wifi);
+            }
+        } catch (SQLException e) {
+            System.err.println("Errore caricamento Wifi: " + e.getMessage());
+        }
+        return wifiList;
     }
 
     @Override
@@ -141,13 +202,13 @@ public class SqliteItemRepository implements ItemRepository {
         String tabella;
         switch (type) {
             case LOGINBASIC:
-                tabella = "Logins";
+                tabella = "LoginsBasic";
                 break;
             case CREDITCARD:
-                tabella = "Carte";
+                tabella = "CreditCards";
                 break;
             case WIFIBASIC:
-                tabella = "Wifi";
+                tabella = "WifisBasic";
                 break;
             default:
                 System.err.println("Tipo non supportato per eliminazione.");
