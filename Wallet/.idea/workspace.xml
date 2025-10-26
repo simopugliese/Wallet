@@ -4,18 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1bca0ee2-7bab-4d1d-812a-7e32be3dc1ea" name="Changes" comment="debug">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/simonepugliese/core/model/Item/BasicWifiFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/simonepugliese/vecchio/core/model/Item/BasicWifiFactory.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/simonepugliese/core/model/Item/CreditCardFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/simonepugliese/vecchio/core/model/Item/CreditCardFactory.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/simonepugliese/core/model/Item/Field.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/simonepugliese/vecchio/core/model/Item/Field.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/simonepugliese/core/model/Item/FieldType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/simonepugliese/vecchio/core/model/Item/FieldType.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/simonepugliese/core/model/Item/Item.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/simonepugliese/vecchio/core/model/Item/Item.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/simonepugliese/core/model/Item/ItemFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/simonepugliese/vecchio/core/model/Item/ItemFactory.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/simonepugliese/core/model/Item/ItemType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/simonepugliese/vecchio/core/model/Item/ItemType.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/simonepugliese/core/model/Item/NullField.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/simonepugliese/vecchio/core/model/Item/NullField.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/simonepugliese/main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/simonepugliese/main.java" afterDir="false" />
+    <list default="true" id="1bca0ee2-7bab-4d1d-812a-7e32be3dc1ea" name="Changes" comment="Changes in design of the application">
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/simonepugliese/Data/Item.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/simonepugliese/Data/Item.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -129,7 +119,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1761380401023</updated>
-      <workItem from="1761486812673" duration="6822000" />
+      <workItem from="1761486812673" duration="7154000" />
     </task>
     <task id="LOCAL-00001" summary="created item">
       <option name="closed" value="true" />
@@ -163,7 +153,15 @@
       <option name="project" value="LOCAL" />
       <updated>1761388258122</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Changes in design of the application">
+      <option name="closed" value="true" />
+      <created>1761493698603</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1761493698603</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -184,6 +182,7 @@
     <MESSAGE value="created item" />
     <MESSAGE value="modified item" />
     <MESSAGE value="debug" />
-    <option name="LAST_COMMIT_MESSAGE" value="debug" />
+    <MESSAGE value="Changes in design of the application" />
+    <option name="LAST_COMMIT_MESSAGE" value="Changes in design of the application" />
   </component>
 </project>

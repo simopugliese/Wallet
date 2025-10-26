@@ -1,6 +1,6 @@
 package com.simonepugliese.Data;
 
-enum ItemType {
+public enum ItemType {
     CREDITCARD,
     WIFIBASIC,
     LOGINBASIC

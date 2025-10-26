@@ -1,6 +1,12 @@
 package com.simonepugliese.Data;
 
-public class CreditCardItem extends Item{
+public class CreditCardItem extends Item {
+    private String owner;
+    private String bank;
+    private String number;
+    private int cvv;
+    private String expiration;
+
     public CreditCardItem(
             int id,
             String owner,
@@ -10,85 +16,51 @@ public class CreditCardItem extends Item{
             String expiration,
             String notes
     ) {
-        super(id, ItemType.CREDITCARD);
-        createOwnerField(owner);
-        createBankField(bank);
-        createNumberField(number);
-        createCvvField(cvv);
-        createExpirationField(expiration);
-        createNotesField(notes);
+        super(id, ItemType.CREDITCARD, notes);
+        this.owner = owner;
+        this.bank = bank;
+        this.number = number;
+        this.cvv = cvv;
+        this.expiration = expiration;
     }
 
-    private void createOwnerField(String owner){
-        super.getData().put("owner", new Field(super.getId(), owner));
+    public String getOwner() {
+        return owner;
     }
 
-    private void createBankField(String bank){
-        super.getData().put("bank", new Field(super.getId(), bank));
+    public void setOwner(String owner) {
+        this.owner = owner;
     }
 
-    private void createNumberField(String number){
-        super.getData().put("number", new Field(super.getId(), number));
+    public String getBank() {
+        return bank;
     }
 
-    private void createCvvField(int cvv){
-        super.getData().put("cvv", new Field(super.getId(), cvv));
+    public void setBank(String bank) {
+        this.bank = bank;
     }
 
-    private void createExpirationField(String expiration){
-        super.getData().put("expiration", new Field(super.getId(), expiration));
+    public String getNumber() {
+        return number;
     }
 
-    private void createNotesField(String notes){
-        super.getData().put("notes", new Field(super.getId(), notes));
+    public void setNumber(String number) {
+        this.number = number;
     }
 
-    public String getOwner(){
-        return super.getData().get("owner").getField().toString();
+    public int getCvv() {
+        return cvv;
     }
 
-    public void setOwner(String owner){
-        super.getData().get("owner").setField(owner);
+    public void setCvv(int cvv) {
+        this.cvv = cvv;
     }
 
-    public String getBank(){
-        return super.getData().get("bank").getField().toString();
+    public String getExpiration() {
+        return expiration;
     }
 
-    public void setBank(String bank){
-        super.getData().get("bank").setField(bank);
-    }
-
-    public String getNumber(){
-        return super.getData().get("number").getField().toString();
-    }
-
-    public void setNumber(String number){
-        super.getData().get("number").setField(number);
-    }
-
-    public int getCvv(){
-        return (int) super.getData().get("cvv").getField();
-    }
-
-    public void setCvv(int cvv){
-        super.getData().get("cvv").setField(cvv);
-    }
-
-    public String getExpiration(){
-        return super.getData().get("expiration").getField().toString();
-    }
-
-    public void setExpiration(String expiration){
-        super.getData().get("expiration").setField(expiration);
-    }
-
-    public String getNotes(){
-        return super.getData().get("notes").getField().toString();
-    }
-
-    public void setNotes(String notes){
-        super.getData().get("notes").setField(notes);
+    public void setExpiration(String expiration) {
+        this.expiration = expiration;
     }
 }
-

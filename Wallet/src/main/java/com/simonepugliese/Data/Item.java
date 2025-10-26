@@ -1,17 +1,14 @@
 package com.simonepugliese.Data;
 
-import java.util.HashMap;
-import java.util.Map;
-
 public abstract class Item {
     private int id;
     private ItemType itemType;
-    private Map<String, Field> data;
+    private String note;
 
-    protected Item(int id, ItemType itemType) {
+    protected Item(int id, ItemType itemType, String note) {
         this.id = id;
         this.itemType = itemType;
-        this.data = new HashMap<>();
+        this.note = note;
     }
 
     public int getId() {
@@ -22,8 +19,11 @@ public abstract class Item {
         return itemType;
     }
 
-    public Map<String, Field> getData() {
-        return data;
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
     }
 }
-

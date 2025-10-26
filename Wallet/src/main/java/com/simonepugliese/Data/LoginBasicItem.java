@@ -1,51 +1,47 @@
 package com.simonepugliese.Data;
 
-public class LoginBasicItem extends Item{
+public class LoginBasicItem extends Item {
+
+    private String username;
+    private String password;
+    private String urlSito;
+
+    // Costruttore
     public LoginBasicItem(
             int id,
             String username,
             String password,
-            String notes
+            String urlSito,
+            String notes // Campo comune
     ) {
-        super(id, ItemType.LOGINBASIC);
-        createUsernameField(username);
-        createPasswordField(password);
-        createNotesField(notes);
+        // Chiama il costruttore della classe Madre (Item)
+        super(id, ItemType.LOGINBASIC, notes);
+        this.username = username;
+        this.password = password;
+        this.urlSito = urlSito;
     }
 
-    private void createUsernameField(String username){
-        super.getData().put("username", new Field(super.getId(), username));
+    public String getUsername() {
+        return username;
     }
 
-    private void createPasswordField(String password){
-        super.getData().put("password", new Field(super.getId(), password));
+    public void setUsername(String username) {
+        this.username = username;
     }
 
-    private void createNotesField(String notes){
-        super.getData().put("notes", new Field(super.getId(), notes));
+    public String getPassword() {
+        return password;
     }
 
-    public String getUsername(){
-        return super.getData().get("username").getField().toString();
+    public void setPassword(String password) {
+        this.password = password;
     }
 
-    public void setUsername(String username){
-        super.getData().get("username").setField(username);
+    public String getUrlSito() {
+        return urlSito;
     }
 
-    public String getPassword(){
-        return super.getData().get("password").getField().toString();
-    }
-
-    public void setPassword(String password){
-        super.getData().get("password").setField(password);
-    }
-
-    public String getNotes(){
-        return super.getData().get("notes").getField().toString();
-    }
-
-    public void setNotes(String notes){
-        super.getData().get("notes").setField(notes);
+    public void setUrlSito(String urlSito) {
+        this.urlSito = urlSito;
     }
 }
