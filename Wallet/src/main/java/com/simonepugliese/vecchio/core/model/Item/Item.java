@@ -1,4 +1,4 @@
-package com.simonepugliese.core.model.Item;
+package com.simonepugliese.vecchio.core.model.Item;
 
 import java.util.ArrayList;
 import java.util.List;

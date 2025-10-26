@@ -1,20 +1,13 @@
 package com.simonepugliese;
 
-import com.simonepugliese.core.model.Item.BasicWifiFactory;
-import com.simonepugliese.core.model.Item.CreditCardFactory;
-import com.simonepugliese.core.model.Item.ItemFactory;
+import com.simonepugliese.Data.CreditCardItem;
+import com.simonepugliese.Data.Item;
+import com.simonepugliese.Data.WifiBasicItem;
 
 public class main {
     public static void main(String[] args) {
-        int idUno = 1;
-        int idDue = 2;
+        Item cartaUno = new CreditCardItem(1, "simo", "banca", "0000", 124, "dic 2056", "no notes");
+        Item basicWifi = new WifiBasicItem(2, "ciao", "ciao2", "non so che wifi sia");
 
-        ItemFactory creditCard = new CreditCardFactory((Object) idUno, "simone", "hype", "1234123412341234",123,"Dic 2025","mia carta");
-        CreditCardFactory c = (CreditCardFactory) creditCard;
-        System.out.println(c.toString());
-
-        ItemFactory basicWifi = new BasicWifiFactory((Object) idDue, "ciao", "password","casa");
-        BasicWifiFactory w = (BasicWifiFactory) basicWifi;
-        System.out.println(w.toString());
     }
 }

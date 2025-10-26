@@ -1,4 +1,4 @@
-package com.simonepugliese.core.model.Item;
+package com.simonepugliese.vecchio.core.model.Item;
 
 class Field {
     private FieldType fieldType;
