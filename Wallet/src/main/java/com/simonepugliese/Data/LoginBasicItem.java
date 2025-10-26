@@ -6,7 +6,6 @@ public class LoginBasicItem extends Item {
     private String password;
     private String urlSito;
 
-    // Costruttore
     public LoginBasicItem(
             int id,
             String username,
@@ -14,7 +13,6 @@ public class LoginBasicItem extends Item {
             String urlSito,
             String notes // Campo comune
     ) {
-        // Chiama il costruttore della classe Madre (Item)
         super(id, ItemType.LOGINBASIC, notes);
         this.username = username;
         this.password = password;
