@@ -3,10 +3,9 @@ package com.simonepugliese.Persistence;
 import com.simonepugliese.Data.*;
 import com.simonepugliese.Logic.ItemRepository;
 
-import java.io.ByteArrayInputStream;
-import java.io.InputStream;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class SqliteItemRepository implements ItemRepository {
@@ -42,8 +41,8 @@ public class SqliteItemRepository implements ItemRepository {
     public void inizializeDB() {
         String sqlUsers = "CREATE TABLE IF NOT EXISTS Users ("
                 + " username TEXT PRIMARY KEY,"
-                + " password BLOB,"
-                + " salt BLOB"
+                + " password TEXT,"
+                + " salt TEXT"
                 + ");";
 
         String sqlLoginsBasic = "CREATE TABLE IF NOT EXISTS LoginsBasic ("
@@ -84,20 +83,16 @@ public class SqliteItemRepository implements ItemRepository {
 
     @Override
     public void saveUser(String username, byte[] password, byte[] salt) {
-        String sql = "INSERT OR REPLACE INTO User (username, password, salt) "
+        String sql = "INSERT OR REPLACE INTO Users (username, password, salt) "
                 + "VALUES(?, ?, ?)";
-        InputStream passwordStream = new ByteArrayInputStream(password);
-        InputStream saltStream = new ByteArrayInputStream(salt);
         try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setString(1, username);
-            pstmt.setBlob(2, passwordStream);
-            pstmt.setBlob(3, saltStream);
+            pstmt.setString(2, Arrays.toString(password));
+            pstmt.setString(3, Arrays.toString(salt));
             pstmt.executeUpdate();
         } catch (SQLException e) {
             System.err.println("Errore salvataggio User: " + e.getMessage());
-        } finally {
-            passwordStream = null;
-            saltStream = null;
+            e.printStackTrace();
         }
     }
 
@@ -111,8 +106,8 @@ public class SqliteItemRepository implements ItemRepository {
 
             while (rs.next()) {
                 user.add(rs.getString("username"));
-                user.add(rs.getBlob("password"));
-                user.add(rs.getBlob("salt"));
+                user.add(Arrays.copyOf(rs.getString("password").getBytes(), rs.getString("password").getBytes().length));
+                user.add(Arrays.copyOf(rs.getString("salt").getBytes(), rs.getString("salt").getBytes().length));
             }
         } catch (SQLException e) {
             System.err.println("Errore caricamento Logins: " + e.getMessage());

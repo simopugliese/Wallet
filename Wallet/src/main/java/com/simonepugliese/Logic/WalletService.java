@@ -52,11 +52,15 @@ public class WalletService {
     public void saveUser(String username, String password){
         byte[] salt = AesEncryptionUtils.generateSalt();
         try {
-            repository.saveUser(username, AesEncryptionUtils.deriveKeyFromPassword(password, salt), salt);
+            repository.saveUser(username, AesEncryptionUtils.deriveKeyFromPassword(password, salt) , salt);
         }
         catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public List<Object> loadUser(String username){
+        return repository.loadUser(username);
     }
 
     public List<LoginBasicItem> LoadLoginsBasic() throws Exception {
