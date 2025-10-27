@@ -18,6 +18,7 @@ public class SqliteItemRepository implements ItemRepository {
             this.conn = DriverManager.getConnection(url);
             if (this.conn != null) {
                 System.out.println("Connessione a SQLite stabilita.");
+                inizializeDB();
             }
         } catch (SQLException e) {
             System.err.println("Errore connessione DB: " + e.getMessage());
@@ -36,7 +37,13 @@ public class SqliteItemRepository implements ItemRepository {
     }
 
     @Override
-    public void inizializzaDB() {
+    public void inizializeDB() {
+        String sqlUtente = "CREATE TABLE IF NOT EXISTS Utente ("
+                + " username TEXT PRIMARY KEY,"
+                + " password TEXT,"
+                + " salt BLOB"
+                + ");";
+
         String sqlLoginsBasic = "CREATE TABLE IF NOT EXISTS LoginsBasic ("
                 + " id INTEGER PRIMARY KEY,"
                 + " username TEXT NOT NULL,"
@@ -66,6 +73,7 @@ public class SqliteItemRepository implements ItemRepository {
             stmt.execute(sqlLoginsBasic);
             stmt.execute(sqlCreditCards);
             stmt.execute(sqlWifisBasic);
+            stmt.execute(sqlUtente);
             System.out.println("Tabelle controllate/create con successo.");
         } catch (SQLException e) {
             System.err.println("Errore creazione tabelle: " + e.getMessage());
@@ -73,7 +81,7 @@ public class SqliteItemRepository implements ItemRepository {
     }
 
     @Override
-    public void salvaLoginsBasic(LoginBasicItem login) {
+    public void saveLoginBasic(LoginBasicItem login) {
         String sql = "INSERT OR REPLACE INTO LoginsBasic (id, username, password, urlSito, note) "
                 + "VALUES(?, ?, ?, ?, ?)";
 
@@ -90,7 +98,7 @@ public class SqliteItemRepository implements ItemRepository {
     }
 
     @Override
-    public List<LoginBasicItem> caricaTuttiLoginBasic() {
+    public List<LoginBasicItem> loadAllLoginBasic() {
         String sql = "SELECT * FROM LoginsBasic";
         List<LoginBasicItem> logins = new ArrayList<>();
 
@@ -114,7 +122,7 @@ public class SqliteItemRepository implements ItemRepository {
     }
 
     @Override
-    public void salvaCreditCards(CreditCardItem carta) {
+    public void saveCreditCard(CreditCardItem carta) {
         String sql = "INSERT OR REPLACE INTO CreditCards (id, owner, bank, number, cvv, expiration, note) "
                 + "VALUES(?, ?, ?, ?, ?, ?, ?)";
 
@@ -133,7 +141,7 @@ public class SqliteItemRepository implements ItemRepository {
     }
 
     @Override
-    public List<CreditCardItem> caricaTutteCreditCards() {
+    public List<CreditCardItem> loadAllCreditCards() {
         String sql = "SELECT * FROM CreditCards";
         List<CreditCardItem> carte = new ArrayList<>();
 
@@ -159,7 +167,7 @@ public class SqliteItemRepository implements ItemRepository {
     }
 
     @Override
-    public void salvaWifisBasic(WifiBasicItem wifi) {
+    public void saveWifiBasic(WifiBasicItem wifi) {
         String sql = "INSERT OR REPLACE INTO WifisBasic (id, ssid, password, note) "
                 + "VALUES(?, ?, ?, ?)";
 
@@ -175,7 +183,7 @@ public class SqliteItemRepository implements ItemRepository {
     }
 
     @Override
-    public List<WifiBasicItem> caricaTuttiWifisBasic() {
+    public List<WifiBasicItem> loadAllWifisBasic() {
         String sql = "SELECT * FROM WifisBasic";
         List<WifiBasicItem> wifiList = new ArrayList<>();
 

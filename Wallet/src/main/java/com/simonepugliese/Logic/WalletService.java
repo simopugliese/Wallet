@@ -25,7 +25,6 @@ public class WalletService {
         this.encryptionService = encryptionService;
     }
 
-
     public boolean sbloccaWallet(String masterPassword, byte[] salt) {
         if (masterPassword == null || masterPassword.isEmpty()) {
             return false;
@@ -55,24 +54,28 @@ public class WalletService {
         return true;
     }
 
+    public void salvaUtente(String username, String password, byte[] salt){
+
+    }
+
     public void salvaLogin(LoginBasicItem login) throws Exception {
         if (!isSbloccato()) return;
 
         String passwordInChiaro = login.getPassword();
-        String passwordCifrata = encryptionService.cifra(passwordInChiaro, chiaveDiSessione);
-        login.setPassword(passwordCifrata); // Aggiorna l'oggetto
-        repository.salvaLoginsBasic(login);
+        String passwordCifrata = encryptionService.cript(passwordInChiaro, chiaveDiSessione);
+        login.setPassword(passwordCifrata);
+        repository.saveLoginBasic(login);
     }
 
     public List<LoginBasicItem> caricaLogins() throws Exception {
         if (!isSbloccato()) return List.of();
 
-        List<LoginBasicItem> loginsCifrati = repository.caricaTuttiLoginBasic();
+        List<LoginBasicItem> loginsCifrati = repository.loadAllLoginBasic();
 
         return loginsCifrati.stream().map(login -> {
             try {
                 String passwordCifrata = login.getPassword();
-                String passwordInChiaro = encryptionService.decifra(passwordCifrata, chiaveDiSessione);
+                String passwordInChiaro = encryptionService.decript(passwordCifrata, chiaveDiSessione);
                 login.setPassword(passwordInChiaro);
                 return login;
             } catch (Exception e) {
@@ -84,8 +87,6 @@ public class WalletService {
 
     // Puoi fare lo stesso per Wifi (cifrando `password`)
     // e Carte (cifrando `number` e `cvv`)
-
-    // ... altri metodi (salvaCarta, caricaCarte, ecc.) ...
 
 
     private byte[] derivaChiaveDaPassword(String password, byte[] salt)

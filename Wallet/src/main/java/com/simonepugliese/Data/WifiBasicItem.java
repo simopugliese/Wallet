@@ -1,7 +1,7 @@
 package com.simonepugliese.Data;
 
 public class WifiBasicItem extends Item {
-    private String ssid; // Nome della rete
+    private String ssid;
     private String password;
 
     public WifiBasicItem(

@@ -18,7 +18,7 @@ public class AesEncryptionService implements EncryptionService {
     private static final String ALGORITMO_CHIAVE = "AES";
 
     @Override
-    public String cifra(String testoInChiaro, byte[] chiave) throws Exception {
+    public String cript(String testoInChiaro, byte[] chiave) throws Exception {
         if (chiave.length != 32) {
             throw new IllegalArgumentException("Chiave non valida: deve essere di 32 byte (256 bit).");
         }
@@ -43,7 +43,7 @@ public class AesEncryptionService implements EncryptionService {
     }
 
     @Override
-    public String decifra(String testoCifratoB64, byte[] chiave) throws Exception {
+    public String decript(String testoCifratoB64, byte[] chiave) throws Exception {
         if (chiave.length != 32) {
             throw new IllegalArgumentException("Chiave non valida: deve essere di 32 byte (256 bit).");
         }

@@ -6,16 +6,16 @@ import java.util.List;
 
 public interface ItemRepository {
 
-    void inizializzaDB();
+    void inizializeDB();
 
-    void salvaLoginsBasic(LoginBasicItem login);
-    List<LoginBasicItem> caricaTuttiLoginBasic();
+    void saveLoginBasic(LoginBasicItem login);
+    List<LoginBasicItem> loadAllLoginBasic();
 
-    void salvaCreditCards(CreditCardItem carta);
-    List<CreditCardItem> caricaTutteCreditCards();
+    void saveCreditCard(CreditCardItem carta);
+    List<CreditCardItem> loadAllCreditCards();
 
-    void salvaWifisBasic(WifiBasicItem wifi);
-    List<WifiBasicItem> caricaTuttiWifisBasic();
+    void saveWifiBasic(WifiBasicItem wifi);
+    List<WifiBasicItem> loadAllWifisBasic();
 
     void deleteItem(int id, ItemType type);
 }

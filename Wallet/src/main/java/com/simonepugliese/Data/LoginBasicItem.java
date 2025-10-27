@@ -11,7 +11,7 @@ public class LoginBasicItem extends Item {
             String username,
             String password,
             String urlSito,
-            String notes // Campo comune
+            String notes
     ) {
         super(id, ItemType.LOGINBASIC, notes);
         this.username = username;
