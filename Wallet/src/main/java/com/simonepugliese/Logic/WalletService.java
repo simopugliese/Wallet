@@ -3,13 +3,9 @@ package com.simonepugliese.Logic;
 import com.simonepugliese.Data.CreditCardItem;
 import com.simonepugliese.Data.LoginBasicItem;
 import com.simonepugliese.Data.WifiBasicItem;
-import com.simonepugliese.Persistence.SqliteItemRepository;
 
-import javax.crypto.SecretKeyFactory;
-import javax.crypto.spec.PBEKeySpec;
-import java.security.NoSuchAlgorithmException;
-import java.security.spec.InvalidKeySpecException;
-import java.security.spec.KeySpec;
+import com.simonepugliese.Logic.AesEncryptionUtils;
+
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -25,13 +21,12 @@ public class WalletService {
         this.encryptionService = encryptionService;
     }
 
-    public boolean sbloccaWallet(String masterPassword, byte[] salt) {
+    public boolean unlockWallet(String masterPassword, byte[] salt) {
         if (masterPassword == null || masterPassword.isEmpty()) {
             return false;
         }
         try {
-            this.chiaveDiSessione = derivaChiaveDaPassword(masterPassword, salt);
-            // Qui dovresti provare a decifrare un dato di test per confermare la password
+            this.chiaveDiSessione = AesEncryptionUtils.deriveKeyFromPassword(masterPassword, salt);
             System.out.println("Wallet sbloccato. Chiave generata in memoria.");
             return true;
         } catch (Exception e) {
@@ -40,13 +35,13 @@ public class WalletService {
         }
     }
 
-    public void bloccaWallet() {
+    public void lockWallet() {
         java.util.Arrays.fill(chiaveDiSessione, (byte) 0);
         this.chiaveDiSessione = null;
         System.out.println("Wallet bloccato. Chiave rimossa dalla memoria.");
     }
 
-    private boolean isSbloccato() {
+    private boolean isUnlocked() {
         if (this.chiaveDiSessione == null) {
             System.err.println("Errore di sicurezza: il Wallet è bloccato.");
             return false;
@@ -54,21 +49,18 @@ public class WalletService {
         return true;
     }
 
-    public void salvaUtente(String username, String password, byte[] salt){
-
+    public void saveUser(String username, String password){
+        byte[] salt = AesEncryptionUtils.generateSalt();
+        try {
+            repository.saveUser(username, AesEncryptionUtils.deriveKeyFromPassword(password, salt), salt);
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
-    public void salvaLogin(LoginBasicItem login) throws Exception {
-        if (!isSbloccato()) return;
-
-        String passwordInChiaro = login.getPassword();
-        String passwordCifrata = encryptionService.cript(passwordInChiaro, chiaveDiSessione);
-        login.setPassword(passwordCifrata);
-        repository.saveLoginBasic(login);
-    }
-
-    public List<LoginBasicItem> caricaLogins() throws Exception {
-        if (!isSbloccato()) return List.of();
+    public List<LoginBasicItem> LoadLoginsBasic() throws Exception {
+        if (!isUnlocked()) return List.of();
 
         List<LoginBasicItem> loginsCifrati = repository.loadAllLoginBasic();
 
@@ -88,16 +80,4 @@ public class WalletService {
     // Puoi fare lo stesso per Wifi (cifrando `password`)
     // e Carte (cifrando `number` e `cvv`)
 
-
-    private byte[] derivaChiaveDaPassword(String password, byte[] salt)
-            throws NoSuchAlgorithmException, InvalidKeySpecException {
-
-        int iterazioni = 65536;
-        int lunghezzaChiave = 256;
-
-        KeySpec spec = new PBEKeySpec(password.toCharArray(), salt, iterazioni, lunghezzaChiave);
-        SecretKeyFactory factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA256");
-
-        return factory.generateSecret(spec).getEncoded();
-    }
 }

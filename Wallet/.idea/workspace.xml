@@ -4,12 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1bca0ee2-7bab-4d1d-812a-7e32be3dc1ea" name="Changes" comment="Improvement in Logic Package">
+    <list default="true" id="1bca0ee2-7bab-4d1d-812a-7e32be3dc1ea" name="Changes" comment="Typo correction in Logic Package">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/simonepugliese/Data/LoginBasicItem.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/simonepugliese/Data/LoginBasicItem.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/simonepugliese/Data/WifiBasicItem.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/simonepugliese/Data/WifiBasicItem.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/simonepugliese/Logic/AesEncryptionService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/simonepugliese/Logic/AesEncryptionService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/simonepugliese/Logic/EncryptionService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/simonepugliese/Logic/EncryptionService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/simonepugliese/Logic/ItemRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/simonepugliese/Logic/ItemRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/simonepugliese/Logic/WalletService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/simonepugliese/Logic/WalletService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/simonepugliese/Persistence/SqliteItemRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/simonepugliese/Persistence/SqliteItemRepository.java" afterDir="false" />
@@ -134,7 +130,8 @@
       <updated>1761380401023</updated>
       <workItem from="1761486812673" duration="9943000" />
       <workItem from="1761502248965" duration="995000" />
-      <workItem from="1761551641031" duration="436000" />
+      <workItem from="1761551641031" duration="666000" />
+      <workItem from="1761570962161" duration="1951000" />
     </task>
     <task id="LOCAL-00001" summary="created item">
       <option name="closed" value="true" />
@@ -208,7 +205,15 @@
       <option name="project" value="LOCAL" />
       <updated>1761497037184</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="Typo correction in Logic Package">
+      <option name="closed" value="true" />
+      <created>1761552178086</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1761552178086</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -234,6 +239,7 @@
     <MESSAGE value="Persistence created" />
     <MESSAGE value="Persistence bug fixed" />
     <MESSAGE value="Improvement in Logic Package" />
-    <option name="LAST_COMMIT_MESSAGE" value="Improvement in Logic Package" />
+    <MESSAGE value="Typo correction in Logic Package" />
+    <option name="LAST_COMMIT_MESSAGE" value="Typo correction in Logic Package" />
   </component>
 </project>

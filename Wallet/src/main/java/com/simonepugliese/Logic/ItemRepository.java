@@ -8,6 +8,9 @@ public interface ItemRepository {
 
     void inizializeDB();
 
+    void saveUser(String username, byte[] password, byte[] salt);
+    List<Object> loadUser(String username);
+
     void saveLoginBasic(LoginBasicItem login);
     List<LoginBasicItem> loadAllLoginBasic();
 

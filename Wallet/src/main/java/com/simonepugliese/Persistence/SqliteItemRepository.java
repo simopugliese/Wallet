@@ -3,6 +3,8 @@ package com.simonepugliese.Persistence;
 import com.simonepugliese.Data.*;
 import com.simonepugliese.Logic.ItemRepository;
 
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -38,9 +40,9 @@ public class SqliteItemRepository implements ItemRepository {
 
     @Override
     public void inizializeDB() {
-        String sqlUtente = "CREATE TABLE IF NOT EXISTS Utente ("
+        String sqlUsers = "CREATE TABLE IF NOT EXISTS Users ("
                 + " username TEXT PRIMARY KEY,"
-                + " password TEXT,"
+                + " password BLOB,"
                 + " salt BLOB"
                 + ");";
 
@@ -70,15 +72,54 @@ public class SqliteItemRepository implements ItemRepository {
                 + ");";
 
         try (Statement stmt = conn.createStatement()) {
+            stmt.execute(sqlUsers);
             stmt.execute(sqlLoginsBasic);
             stmt.execute(sqlCreditCards);
             stmt.execute(sqlWifisBasic);
-            stmt.execute(sqlUtente);
             System.out.println("Tabelle controllate/create con successo.");
         } catch (SQLException e) {
             System.err.println("Errore creazione tabelle: " + e.getMessage());
         }
     }
+
+    @Override
+    public void saveUser(String username, byte[] password, byte[] salt) {
+        String sql = "INSERT OR REPLACE INTO User (username, password, salt) "
+                + "VALUES(?, ?, ?)";
+        InputStream passwordStream = new ByteArrayInputStream(password);
+        InputStream saltStream = new ByteArrayInputStream(salt);
+        try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, username);
+            pstmt.setBlob(2, passwordStream);
+            pstmt.setBlob(3, saltStream);
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            System.err.println("Errore salvataggio User: " + e.getMessage());
+        } finally {
+            passwordStream = null;
+            saltStream = null;
+        }
+    }
+
+    @Override
+    public List<Object> loadUser(String username) {
+        String sql = "SELECT * FROM Users";
+        List<Object> user = new ArrayList<>();
+
+        try (Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+
+            while (rs.next()) {
+                user.add(rs.getString("username"));
+                user.add(rs.getBlob("password"));
+                user.add(rs.getBlob("salt"));
+            }
+        } catch (SQLException e) {
+            System.err.println("Errore caricamento Logins: " + e.getMessage());
+        }
+        return user;
+    }
+
 
     @Override
     public void saveLoginBasic(LoginBasicItem login) {
