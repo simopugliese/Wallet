@@ -362,6 +362,7 @@ public class WalletController {
             detailMessageLabel.setText("ERRORE DI DECRITTOGRAFIA. Forza blocco.");
             System.err.println("Errore di decrittografia su selezione: " + e.getMessage());
             lockApplication();
+            //ciao
         }
     }
 }
