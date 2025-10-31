@@ -4,21 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1bca0ee2-7bab-4d1d-812a-7e32be3dc1ea" name="Changes" comment="tested">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/simonepugliese/Data/CreditCardItem.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/simonepugliese/Data/Item.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/simonepugliese/Data/ItemType.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/simonepugliese/Data/LoginBasicItem.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/simonepugliese/Data/WifiBasicItem.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/simonepugliese/Logic/AesEncryptionService.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/simonepugliese/Logic/AesEncryptionUtils.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/simonepugliese/Logic/EncryptionService.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/simonepugliese/Logic/ItemRepository.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/simonepugliese/Logic/WalletService.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/simonepugliese/Persistence/SqliteItemRepository.java" beforeDir="false" />
+    <list default="true" id="1bca0ee2-7bab-4d1d-812a-7e32be3dc1ea" name="Changes" comment="Refactor">
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/simonepugliese/Criptor/Criptor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/simonepugliese/Criptor/Criptor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/simonepugliese/Criptor/LoginItemCriptor.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/simonepugliese/Manager/LoginItemManager.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/simonepugliese/Manager/Manager.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/simonepugliese/Saver/LoginItemSaver.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/simonepugliese/Saver/Saver.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/simonepugliese/Saver/Saver.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/simonepugliese/main.java" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -151,7 +143,7 @@
       <workItem from="1761814681965" duration="58000" />
       <workItem from="1761830247565" duration="1511000" />
       <workItem from="1761916123667" duration="2859000" />
-      <workItem from="1761921562324" duration="1206000" />
+      <workItem from="1761921562324" duration="1867000" />
     </task>
     <task id="LOCAL-00001" summary="created item">
       <option name="closed" value="true" />
@@ -249,7 +241,15 @@
       <option name="project" value="LOCAL" />
       <updated>1761574023992</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="Refactor">
+      <option name="closed" value="true" />
+      <created>1761922796894</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1761922796894</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -278,6 +278,7 @@
     <MESSAGE value="Typo correction in Logic Package" />
     <MESSAGE value="general improvement" />
     <MESSAGE value="tested" />
-    <option name="LAST_COMMIT_MESSAGE" value="tested" />
+    <MESSAGE value="Refactor" />
+    <option name="LAST_COMMIT_MESSAGE" value="Refactor" />
   </component>
 </project>

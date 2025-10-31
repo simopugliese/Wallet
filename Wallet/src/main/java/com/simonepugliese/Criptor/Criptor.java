@@ -1,6 +1,8 @@
 package com.simonepugliese.Criptor;
 
+import com.simonepugliese.Item.Item;
+
 public abstract class Criptor {
-    abstract void cripta();
-    abstract void decripta();
+    public abstract Item cripta(Item item);
+    public abstract Item decripta(Item item);
 }

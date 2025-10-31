@@ -4,29 +4,34 @@ import com.simonepugliese.Criptor.Criptor;
 import com.simonepugliese.Item.Item;
 import com.simonepugliese.Saver.Saver;
 
-public abstract class Manager {
-    private Item item;
-    private Saver saver;
+import java.util.ArrayList;
+import java.util.List;
+
+public class Manager {
     private Criptor criptor;
+    private Saver saver;
 
-    public Manager(Item item, Saver saver, Criptor criptor) {
-        this.item = item;
-        this.saver = saver;
+    public Manager(Criptor criptor, Saver saver) {
         this.criptor = criptor;
+        this.saver = saver;
     }
 
-    public Item getItem() {
-        return item;
+    public void criptaPoiSalva(Item item){
+        Item itemCriptato = criptor.cripta(item);
+        saver.salva(itemCriptato);
     }
 
-    public Saver getSaver() {
-        return saver;
-    }
+    public List<Item> caricaPoiDecripta(){
+        List<Item> itemCaricatiCriptati = new ArrayList<>();
+        itemCaricatiCriptati = saver.carica();
 
-    public Criptor getCriptor() {
-        return criptor;
-    }
+        List<Item> itemDecriptati = new ArrayList<>();
 
-    public abstract void criptaPoiSalva();
-    public abstract void decriptaPoiMostra();
+        itemCaricatiCriptati.forEach(item -> {
+            Item itemDecriptato = criptor.decripta(item);
+            itemDecriptati.add(itemDecriptato);
+        });
+
+        return itemDecriptati;
+    }
 }
