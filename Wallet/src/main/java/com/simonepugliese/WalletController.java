@@ -3,6 +3,7 @@ package com.simonepugliese;
 import com.simonepugliese.Criptor.CreditCardCriptor;
 import com.simonepugliese.Criptor.CryptoUtils;
 import com.simonepugliese.Criptor.LoginItemCriptor;
+import com.simonepugliese.Item.CreditCardItem;
 import com.simonepugliese.Item.Item;
 import com.simonepugliese.Item.LoginItem;
 import com.simonepugliese.Manager.Manager;
@@ -48,6 +49,14 @@ public class WalletController {
     @FXML private TextField loginUsernameField;
     @FXML private TextField loginPasswordField;
     @FXML private TextField loginUrlField;
+
+    // Componenti UI per Form Salvataggio (Carta di Credito)
+    @FXML private TextField cardDescriptionField;
+    @FXML private TextField cardOwnerField;
+    @FXML private TextField cardBankField;
+    @FXML private TextField cardNumberField;
+    @FXML private PasswordField cardCvvField;
+    @FXML private TextField cardExpirationField;
 
     // Logica Applicativa
     private File walletDbFile;
@@ -233,5 +242,58 @@ public class WalletController {
 
         // Interazione da tastiera
         scene.setOnKeyPressed(e -> resetTimeout());
+    }
+
+    @FXML
+    protected void onSaveCreditCardClick() {
+        String description = cardDescriptionField.getText();
+        String owner = cardOwnerField.getText();
+        String bank = cardBankField.getText();
+        String number = cardNumberField.getText();
+        String cvv = cardCvvField.getText();
+        String expiration = cardExpirationField.getText();
+
+        if (creditCardManager == null) {
+            messageLabel.setText("Errore di sessione: Manager non inizializzato.");
+            return;
+        }
+
+        if (description.isEmpty() || number.isEmpty() || cvv.isEmpty() || expiration.isEmpty()) {
+            messageLabel.setText("Descrizione, Numero Carta, CVV e Scadenza sono obbligatori.");
+            return;
+        }
+
+        // Puoi aggiungere qui la logica di validazione del formato del CVV o della scadenza se necessario.
+
+        CreditCardItem newItem = new CreditCardItem(description, owner, bank, number, cvv, expiration);
+
+        try {
+            // Salva (il manager cripta prima di salvare nel DB)
+            creditCardManager.criptaPoiSalva(newItem);
+
+            // Ricarica tutti i dati (Login e Credit Card)
+            List<Item> updatedItems = loginManager.caricaPoiDecripta();
+            updatedItems.addAll(creditCardManager.caricaPoiDecripta());
+
+            // Aggiorna la tabella
+            walletItems.setAll(updatedItems);
+
+            messageLabel.setText("Carta salvata con successo: " + description);
+
+            // Pulisci i campi del form dopo il salvataggio
+            cardDescriptionField.clear();
+            cardOwnerField.clear();
+            cardBankField.clear();
+            cardNumberField.clear();
+            cardCvvField.clear();
+            cardExpirationField.clear();
+
+            // SECURITY: Resetta il timer di timeout dopo un'attività riuscita
+            resetTimeout();
+
+        } catch (RuntimeException e) {
+            messageLabel.setText("Errore durante il salvataggio nel database.");
+            System.err.println("Errore durante il salvataggio nel DB: " + e.getMessage());
+        }
     }
 }

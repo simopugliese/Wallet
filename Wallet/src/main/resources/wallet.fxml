@@ -70,5 +70,42 @@
                 </GridPane>
             </VBox>
         </Tab>
+
+        <Tab text="Aggiungi Carta di Credito">
+            <VBox alignment="TOP_LEFT" spacing="10.0">
+                <padding>
+                    <Insets top="20.0" right="20.0" bottom="20.0" left="20.0" />
+                </padding>
+                <Label text="Nuova Carta di Credito">
+                    <font><Font size="18.0" /></font>
+                </Label>
+                <GridPane vgap="10" hgap="10">
+                    <columnConstraints>
+                        <ColumnConstraints halignment="RIGHT" prefWidth="120.0" />
+                        <ColumnConstraints hgrow="ALWAYS" />
+                    </columnConstraints>
+
+                    <Label text="Descrizione:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+                    <TextField fx:id="cardDescriptionField" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+
+                    <Label text="Titolare:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+                    <TextField fx:id="cardOwnerField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+
+                    <Label text="Banca:" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+                    <TextField fx:id="cardBankField" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+
+                    <Label text="Numero Carta:" GridPane.columnIndex="0" GridPane.rowIndex="3" />
+                    <TextField fx:id="cardNumberField" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+
+                    <Label text="CVV:" GridPane.columnIndex="0" GridPane.rowIndex="4" />
+                    <PasswordField fx:id="cardCvvField" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+
+                    <Label text="Scadenza (MM/YY):" GridPane.columnIndex="0" GridPane.rowIndex="5" />
+                    <TextField fx:id="cardExpirationField" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+
+                    <Button onAction="#onSaveCreditCardClick" text="Salva Carta" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                </GridPane>
+            </VBox>
+        </Tab>
     </TabPane>
 </VBox>
