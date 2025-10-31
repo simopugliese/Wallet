@@ -32,12 +32,60 @@
     <TabPane fx:id="mainTabPane" prefHeight="450.0" prefWidth="760.0" tabClosingPolicy="UNAVAILABLE" visible="false">
 
         <Tab text="Visualizza Elementi Salvati">
-            <TableView fx:id="itemTable" prefHeight="400.0" prefWidth="760.0">
-                <columns>
-                    <TableColumn fx:id="descriptionColumn" prefWidth="250.0" text="Descrizione" />
-                    <TableColumn fx:id="typeColumn" prefWidth="150.0" text="Tipo" />
-                </columns>
-            </TableView>
+            <SplitPane dividerPositions="0.6" prefHeight="400.0" prefWidth="760.0">
+                <items>
+                    <TableView fx:id="itemTable" prefHeight="400.0" prefWidth="400.0">
+                        <columns>
+                            <TableColumn fx:id="descriptionColumn" prefWidth="250.0" text="Descrizione" />
+                            <TableColumn fx:id="typeColumn" prefWidth="150.0" text="Tipo" />
+                        </columns>
+                    </TableView>
+                    <VBox alignment="TOP_LEFT" spacing="15.0" padding="20">
+                        <Label text="Dettagli Elemento Selezionato" style="-fx-font-weight: bold; -fx-font-size: 16px;"/>
+
+                        <GridPane fx:id="detailGrid" vgap="10" hgap="10">
+                            <columnConstraints>
+                                <ColumnConstraints halignment="RIGHT" prefWidth="100.0" />
+                                <ColumnConstraints hgrow="ALWAYS" />
+                            </columnConstraints>
+
+                            <Label text="Descrizione:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+                            <Label fx:id="detailDescriptionLabel" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+
+                            <Label text="Tipo:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+                            <Label fx:id="detailTypeLabel" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+
+                            <Separator GridPane.columnSpan="2" GridPane.rowIndex="2" />
+
+                            <Label fx:id="detailUsernameTitle" text="Username:" GridPane.columnIndex="0" GridPane.rowIndex="3" visible="false" />
+                            <Label fx:id="detailUsernameLabel" GridPane.columnIndex="1" GridPane.rowIndex="3" visible="false" />
+
+                            <Label fx:id="detailPasswordTitle" text="Password:" GridPane.columnIndex="0" GridPane.rowIndex="4" visible="false" />
+                            <Label fx:id="detailPasswordLabel" GridPane.columnIndex="1" GridPane.rowIndex="4" visible="false" />
+
+                            <Label fx:id="detailUrlTitle" text="URL Sito:" GridPane.columnIndex="0" GridPane.rowIndex="5" visible="false" />
+                            <Label fx:id="detailUrlLabel" GridPane.columnIndex="1" GridPane.rowIndex="5" visible="false" />
+
+                            <Label fx:id="detailOwnerTitle" text="Titolare:" GridPane.columnIndex="0" GridPane.rowIndex="6" visible="false" />
+                            <Label fx:id="detailOwnerLabel" GridPane.columnIndex="1" GridPane.rowIndex="6" visible="false" />
+
+                            <Label fx:id="detailBankTitle" text="Banca:" GridPane.columnIndex="0" GridPane.rowIndex="7" visible="false" />
+                            <Label fx:id="detailBankLabel" GridPane.columnIndex="1" GridPane.rowIndex="7" visible="false" />
+
+                            <Label fx:id="detailNumberTitle" text="Numero Carta:" GridPane.columnIndex="0" GridPane.rowIndex="8" visible="false" />
+                            <Label fx:id="detailNumberLabel" GridPane.columnIndex="1" GridPane.rowIndex="8" visible="false" />
+
+                            <Label fx:id="detailCvvTitle" text="CVV:" GridPane.columnIndex="0" GridPane.rowIndex="9" visible="false" />
+                            <Label fx:id="detailCvvLabel" GridPane.columnIndex="1" GridPane.rowIndex="9" visible="false" />
+
+                            <Label fx:id="detailExpirationTitle" text="Scadenza:" GridPane.columnIndex="0" GridPane.rowIndex="10" visible="false" />
+                            <Label fx:id="detailExpirationLabel" GridPane.columnIndex="1" GridPane.rowIndex="10" visible="false" />
+
+                        </GridPane>
+                        <Label fx:id="detailMessageLabel" text="Seleziona un elemento per visualizzare i dettagli." style="-fx-font-style: italic;"/>
+                    </VBox>
+                </items>
+            </SplitPane>
         </Tab>
 
         <Tab text="Aggiungi Login">

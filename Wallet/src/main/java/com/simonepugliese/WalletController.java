@@ -58,6 +58,38 @@ public class WalletController {
     @FXML private PasswordField cardCvvField;
     @FXML private TextField cardExpirationField;
 
+
+    // ... (omesso codice precedente)
+
+    // Componenti UI per Dettagli
+    @FXML private Label detailDescriptionLabel;
+    @FXML private Label detailTypeLabel;
+    @FXML private Label detailMessageLabel;
+
+    // Dettagli LoginItem
+    @FXML private Label detailUsernameTitle;
+    @FXML private Label detailUsernameLabel;
+    @FXML private Label detailPasswordTitle;
+    @FXML private Label detailPasswordLabel;
+    @FXML private Label detailUrlTitle;
+    @FXML private Label detailUrlLabel;
+
+    // Dettagli CreditCardItem
+    @FXML private Label detailOwnerTitle;
+    @FXML private Label detailOwnerLabel;
+    @FXML private Label detailBankTitle;
+    @FXML private Label detailBankLabel;
+    @FXML private Label detailNumberTitle;
+    @FXML private Label detailNumberLabel;
+    @FXML private Label detailCvvTitle;
+    @FXML private Label detailCvvLabel;
+    @FXML private Label detailExpirationTitle;
+    @FXML private Label detailExpirationLabel;
+
+    // Istanziazione diretta dei Criptor per decriptazione singola
+    private final LoginItemCriptor loginCriptor = new LoginItemCriptor();
+    private final CreditCardCriptor creditCardCriptor = new CreditCardCriptor();
+
     // Logica Applicativa
     private File walletDbFile;
     private Manager loginManager;
@@ -77,6 +109,18 @@ public class WalletController {
         itemTable.setItems(walletItems);
 
         setupTimeout();
+
+        setupTimeout();
+        clearDetails(); // Inizializza i dettagli all'avvio
+
+        // NUOVO: Aggiungi listener di selezione alla tabella
+        itemTable.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
+            if (newSelection != null) {
+                showDetails(newSelection);
+            } else {
+                clearDetails();
+            }
+        });
     }
 
     // Configura il timer di sicurezza
@@ -294,6 +338,103 @@ public class WalletController {
         } catch (RuntimeException e) {
             messageLabel.setText("Errore durante il salvataggio nel database.");
             System.err.println("Errore durante il salvataggio nel DB: " + e.getMessage());
+        }
+    }
+
+    // Nasconde tutti i campi specifici e pulisce i dettagli
+    private void clearDetails() {
+        // Nasconde tutti i campi Login
+        detailUsernameTitle.setVisible(false);
+        detailUsernameLabel.setVisible(false);
+        detailPasswordTitle.setVisible(false);
+        detailPasswordLabel.setVisible(false);
+        detailUrlTitle.setVisible(false);
+        detailUrlLabel.setVisible(false);
+
+        // Nasconde tutti i campi Credit Card
+        detailOwnerTitle.setVisible(false);
+        detailOwnerLabel.setVisible(false);
+        detailBankTitle.setVisible(false);
+        detailBankLabel.setVisible(false);
+        detailNumberTitle.setVisible(false);
+        detailNumberLabel.setVisible(false);
+        detailCvvTitle.setVisible(false);
+        detailCvvLabel.setVisible(false);
+        detailExpirationTitle.setVisible(false);
+        detailExpirationLabel.setVisible(false);
+
+        // Pulisce i campi comuni
+        detailDescriptionLabel.setText("");
+        detailTypeLabel.setText("");
+        detailMessageLabel.setText("Seleziona un elemento per visualizzare i dettagli.");
+    }
+
+    // Decripta l'elemento selezionato e lo visualizza
+    private void showDetails(Item item) {
+        clearDetails();
+
+        try {
+            Item decryptedItem;
+
+            // Decripta usando l'istanza corretta (Login o Credit Card)
+            if (item.getItemType() == com.simonepugliese.Item.ItemType.LOGIN) {
+                decryptedItem = loginCriptor.decripta(item);
+            } else if (item.getItemType() == com.simonepugliese.Item.ItemType.CREDITCARD) {
+                decryptedItem = creditCardCriptor.decripta(item);
+            } else {
+                detailMessageLabel.setText("Tipo di elemento non supportato.");
+                return;
+            }
+
+            // SECURITY: Resetta il timer di timeout
+            resetTimeout();
+
+            // 1. Visualizza i campi comuni
+            detailDescriptionLabel.setText(decryptedItem.getDescription());
+            detailTypeLabel.setText(decryptedItem.getItemType().toString());
+            detailMessageLabel.setText("Dettagli decriptati in chiaro. Attenzione al timeout!");
+
+            // 2. Visualizza i campi specifici
+            if (decryptedItem instanceof com.simonepugliese.Item.LoginItem loginItem) {
+                detailUsernameTitle.setVisible(true);
+                detailUsernameLabel.setVisible(true);
+                detailUsernameLabel.setText(loginItem.getUsername());
+
+                detailPasswordTitle.setVisible(true);
+                detailPasswordLabel.setVisible(true);
+                detailPasswordLabel.setText(loginItem.getPassword());
+
+                detailUrlTitle.setVisible(true);
+                detailUrlLabel.setVisible(true);
+                detailUrlLabel.setText(loginItem.getUrlSito());
+
+            } else if (decryptedItem instanceof com.simonepugliese.Item.CreditCardItem creditCardItem) {
+                detailOwnerTitle.setVisible(true);
+                detailOwnerLabel.setVisible(true);
+                detailOwnerLabel.setText(creditCardItem.getOwner());
+
+                detailBankTitle.setVisible(true);
+                detailBankLabel.setVisible(true);
+                detailBankLabel.setText(creditCardItem.getBank());
+
+                detailNumberTitle.setVisible(true);
+                detailNumberLabel.setVisible(true);
+                detailNumberLabel.setText(creditCardItem.getNumber()); // DATO SENSIBILE IN CHIARO
+
+                detailCvvTitle.setVisible(true);
+                detailCvvLabel.setVisible(true);
+                detailCvvLabel.setText(creditCardItem.getCvv()); // DATO SENSIBILE IN CHIARO
+
+                detailExpirationTitle.setVisible(true);
+                detailExpirationLabel.setVisible(true);
+                detailExpirationLabel.setText(creditCardItem.getExpiration());
+            }
+
+        } catch (RuntimeException e) {
+            // Decrittazione fallita (chiave in memoria sbagliata, Tag GCM errato)
+            detailMessageLabel.setText("ERRORE DI DECRITTOGRAFIA. Forza blocco.");
+            System.err.println("Errore di decrittografia su selezione: " + e.getMessage());
+            lockApplication();
         }
     }
 }

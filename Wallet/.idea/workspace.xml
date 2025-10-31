@@ -4,7 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1bca0ee2-7bab-4d1d-812a-7e32be3dc1ea" name="Changes" comment="Refactor">
+    <list default="true" id="1bca0ee2-7bab-4d1d-812a-7e32be3dc1ea" name="Changes" comment="WARNING AND ERRORS">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/simonepugliese/WalletController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/simonepugliese/WalletController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/wallet.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/wallet.fxml" afterDir="false" />
     </list>
@@ -214,7 +215,7 @@
       <workItem from="1761916123667" duration="2859000" />
       <workItem from="1761921562324" duration="2714000" />
       <workItem from="1761942548024" duration="24000" />
-      <workItem from="1761942622168" duration="7115000" />
+      <workItem from="1761942622168" duration="7714000" />
     </task>
     <task id="LOCAL-00001" summary="created item">
       <option name="closed" value="true" />
@@ -456,7 +457,15 @@
       <option name="project" value="LOCAL" />
       <updated>1761950278460</updated>
     </task>
-    <option name="localTasksCounter" value="31" />
+    <task id="LOCAL-00031" summary="Refactor">
+      <option name="closed" value="true" />
+      <created>1761950630584</created>
+      <option name="number" value="00031" />
+      <option name="presentableId" value="LOCAL-00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1761950630584</updated>
+    </task>
+    <option name="localTasksCounter" value="32" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -498,6 +507,7 @@
     <MESSAGE value="Override toString()" />
     <MESSAGE value="dinamic set for *.db file" />
     <MESSAGE value="Refactor" />
-    <option name="LAST_COMMIT_MESSAGE" value="Refactor" />
+    <MESSAGE value="WARNING AND ERRORS" />
+    <option name="LAST_COMMIT_MESSAGE" value="WARNING AND ERRORS" />
   </component>
 </project>
