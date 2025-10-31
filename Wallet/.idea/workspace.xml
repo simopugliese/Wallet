@@ -4,11 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1bca0ee2-7bab-4d1d-812a-7e32be3dc1ea" name="Changes" comment="An implementation of Saver was given">
+    <list default="true" id="1bca0ee2-7bab-4d1d-812a-7e32be3dc1ea" name="Changes" comment="JavaFX">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/simonepugliese/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/simonepugliese/App.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/simonepugliese/Manager/Manager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/simonepugliese/Manager/Manager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/simonepugliese/App.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/module-info.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -20,8 +20,9 @@
       <list>
         <option value="Enum" />
         <option value="Interface" />
-        <option value="Class" />
         <option value="JUnit5 Test Class" />
+        <option value="Class" />
+        <option value="FxmlFile" />
       </list>
     </option>
   </component>
@@ -59,6 +60,10 @@
     "Application.App.executor": "Run",
     "Application.Field.executor": "Run",
     "Application.main.executor": "Run",
+    "JUnit.CryptoUtilsTest.executor": "Run",
+    "JUnit.LoginItemCriptorTest.executor": "Run",
+    "JUnit.LoginItemSaverTest.executor": "Run",
+    "JUnit.ManagerTest.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
     "RunOnceActivity.git.unshallow": "true",
@@ -76,6 +81,9 @@
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
     "to.speed.mode.migration.done": "true",
     "vue.rearranger.settings.migration": "true"
   },
@@ -95,9 +103,9 @@
       <recent name="com.simonepugliese.Criptor" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.App">
-    <configuration name="App" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="com.simonepugliese.App" />
+  <component name="RunManager" selected="Application.WalletApplication">
+    <configuration name="WalletApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.simonepugliese.WalletApplication" />
       <module name="Wallet" />
       <extension name="coverage">
         <pattern>
@@ -109,37 +117,73 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="Field" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="com.simonepugliese.core.model.Item.Field" />
+    <configuration name="CryptoUtilsTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="Wallet" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="com.simonepugliese.core.model.Item.*" />
+          <option name="PATTERN" value="com.simonepugliese.Criptor.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
+      <option name="PACKAGE_NAME" value="com.simonepugliese.Criptor" />
+      <option name="MAIN_CLASS_NAME" value="com.simonepugliese.Criptor.CryptoUtilsTest" />
+      <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="com.simonepugliese.VECCHIO.main" />
+    <configuration name="LoginItemCriptorTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="Wallet" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="com.simonepugliese.VECCHIO.*" />
+          <option name="PATTERN" value="com.simonepugliese.Criptor.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
+      <option name="PACKAGE_NAME" value="com.simonepugliese.Criptor" />
+      <option name="MAIN_CLASS_NAME" value="com.simonepugliese.Criptor.LoginItemCriptorTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="LoginItemSaverTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="Wallet" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.simonepugliese.Saver.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.simonepugliese.Saver" />
+      <option name="MAIN_CLASS_NAME" value="com.simonepugliese.Saver.LoginItemSaverTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ManagerTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="Wallet" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.simonepugliese.Manager.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.simonepugliese.Manager" />
+      <option name="MAIN_CLASS_NAME" value="com.simonepugliese.Manager.ManagerTest" />
+      <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.App" />
-        <item itemvalue="Application.main" />
-        <item itemvalue="Application.Field" />
+        <item itemvalue="Application.WalletApplication" />
+        <item itemvalue="JUnit.CryptoUtilsTest" />
+        <item itemvalue="JUnit.LoginItemSaverTest" />
+        <item itemvalue="JUnit.ManagerTest" />
+        <item itemvalue="JUnit.LoginItemCriptorTest" />
       </list>
     </recent_temporary>
   </component>
@@ -171,7 +215,7 @@
       <workItem from="1761916123667" duration="2859000" />
       <workItem from="1761921562324" duration="2714000" />
       <workItem from="1761942548024" duration="24000" />
-      <workItem from="1761942622168" duration="4285000" />
+      <workItem from="1761942622168" duration="5629000" />
     </task>
     <task id="LOCAL-00001" summary="created item">
       <option name="closed" value="true" />
@@ -325,7 +369,47 @@
       <option name="project" value="LOCAL" />
       <updated>1761946446343</updated>
     </task>
-    <option name="localTasksCounter" value="20" />
+    <task id="LOCAL-00020" summary="Test files created">
+      <option name="closed" value="true" />
+      <created>1761947550948</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1761947550948</updated>
+    </task>
+    <task id="LOCAL-00021" summary="Criptor criptor and Saver saver are now final">
+      <option name="closed" value="true" />
+      <created>1761947582692</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1761947582692</updated>
+    </task>
+    <task id="LOCAL-00022" summary="All tests passed">
+      <option name="closed" value="true" />
+      <created>1761948065393</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1761948065393</updated>
+    </task>
+    <task id="LOCAL-00023" summary="The pom.xml now supports JavaFX">
+      <option name="closed" value="true" />
+      <created>1761948401033</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1761948401033</updated>
+    </task>
+    <task id="LOCAL-00024" summary="JavaFX">
+      <option name="closed" value="true" />
+      <created>1761948718686</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1761948718686</updated>
+    </task>
+    <option name="localTasksCounter" value="25" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -360,6 +444,11 @@
     <MESSAGE value="An actual implementation of Cryptor was given" />
     <MESSAGE value="Security implementation" />
     <MESSAGE value="An implementation of Saver was given" />
-    <option name="LAST_COMMIT_MESSAGE" value="An implementation of Saver was given" />
+    <MESSAGE value="Test files created" />
+    <MESSAGE value="Criptor criptor and Saver saver are now final" />
+    <MESSAGE value="All tests passed" />
+    <MESSAGE value="The pom.xml now supports JavaFX" />
+    <MESSAGE value="JavaFX" />
+    <option name="LAST_COMMIT_MESSAGE" value="JavaFX" />
   </component>
 </project>
