@@ -4,12 +4,21 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1bca0ee2-7bab-4d1d-812a-7e32be3dc1ea" name="Changes" comment="general improvement">
+    <list default="true" id="1bca0ee2-7bab-4d1d-812a-7e32be3dc1ea" name="Changes" comment="tested">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/simonepugliese/Logic/WalletService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/simonepugliese/Logic/WalletService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/simonepugliese/Persistence/SqliteItemRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/simonepugliese/Persistence/SqliteItemRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/simonepugliese/main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/simonepugliese/main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/wallet.db" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/simonepugliese/Data/CreditCardItem.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/simonepugliese/Data/Item.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/simonepugliese/Data/ItemType.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/simonepugliese/Data/LoginBasicItem.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/simonepugliese/Data/WifiBasicItem.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/simonepugliese/Logic/AesEncryptionService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/simonepugliese/Logic/AesEncryptionUtils.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/simonepugliese/Logic/EncryptionService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/simonepugliese/Logic/ItemRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/simonepugliese/Logic/WalletService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/simonepugliese/Persistence/SqliteItemRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/simonepugliese/Saver/Saver.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/simonepugliese/Saver/Saver.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/simonepugliese/main.java" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -47,6 +56,9 @@
   &quot;associatedIndex&quot;: 7
 }</component>
   <component name="ProjectId" id="34YB03xN3Soc10uNPypyl6OxWFA" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="1" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -94,11 +106,11 @@
       </method>
     </configuration>
     <configuration name="main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="com.simonepugliese.main" />
+      <option name="MAIN_CLASS_NAME" value="com.simonepugliese.VECCHIO.main" />
       <module name="Wallet" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="com.simonepugliese.*" />
+          <option name="PATTERN" value="com.simonepugliese.VECCHIO.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -132,7 +144,14 @@
       <workItem from="1761486812673" duration="9943000" />
       <workItem from="1761502248965" duration="995000" />
       <workItem from="1761551641031" duration="666000" />
-      <workItem from="1761570962161" duration="2994000" />
+      <workItem from="1761570962161" duration="3047000" />
+      <workItem from="1761659392431" duration="71000" />
+      <workItem from="1761749500605" duration="65000" />
+      <workItem from="1761750295374" duration="2365000" />
+      <workItem from="1761814681965" duration="58000" />
+      <workItem from="1761830247565" duration="1511000" />
+      <workItem from="1761916123667" duration="2859000" />
+      <workItem from="1761921562324" duration="1206000" />
     </task>
     <task id="LOCAL-00001" summary="created item">
       <option name="closed" value="true" />
@@ -222,7 +241,15 @@
       <option name="project" value="LOCAL" />
       <updated>1761572983887</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="tested">
+      <option name="closed" value="true" />
+      <created>1761574023992</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1761574023992</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -250,6 +277,7 @@
     <MESSAGE value="Improvement in Logic Package" />
     <MESSAGE value="Typo correction in Logic Package" />
     <MESSAGE value="general improvement" />
-    <option name="LAST_COMMIT_MESSAGE" value="general improvement" />
+    <MESSAGE value="tested" />
+    <option name="LAST_COMMIT_MESSAGE" value="tested" />
   </component>
 </project>

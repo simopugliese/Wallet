@@ -1,19 +1,12 @@
-package com.simonepugliese.Data;
+package com.simonepugliese.Item;
 
-public class LoginBasicItem extends Item {
-
+public class LoginItem extends Item{
     private String username;
     private String password;
     private String urlSito;
 
-    public LoginBasicItem(
-            int id,
-            String username,
-            String password,
-            String urlSito,
-            String notes
-    ) {
-        super(id, ItemType.LOGINBASIC, notes);
+    public LoginItem(String description, String username, String password, String urlSito) {
+        super(description, ItemType.LOGIN);
         this.username = username;
         this.password = password;
         this.urlSito = urlSito;
