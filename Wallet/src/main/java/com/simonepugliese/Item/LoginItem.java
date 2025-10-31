@@ -35,4 +35,14 @@ public class LoginItem extends Item{
     public void setUrlSito(String urlSito) {
         this.urlSito = urlSito;
     }
+
+    @Override
+    public String toString() {
+        return "LoginItem{" +
+                "description='" + super.getDescription() + '\'' +
+                "username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", urlSito='" + urlSito + '\'' +
+                '}';
+    }
 }

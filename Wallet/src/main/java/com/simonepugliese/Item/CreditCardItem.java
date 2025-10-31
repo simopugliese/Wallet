@@ -55,4 +55,16 @@ public class CreditCardItem extends Item{
     public void setExpiration(String expiration) {
         this.expiration = expiration;
     }
+
+    @Override
+    public String toString() {
+        return "CreditCardItem{" +
+                "description='" + super.getDescription() + '\'' +
+                "owner='" + owner + '\'' +
+                ", bank='" + bank + '\'' +
+                ", number='" + number + '\'' +
+                ", cvv='" + cvv + '\'' +
+                ", expiration='" + expiration + '\'' +
+                '}';
+    }
 }
