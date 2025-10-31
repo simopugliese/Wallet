@@ -17,15 +17,12 @@ import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.KeyCode;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.io.File;
-import java.io.IOException;
-import java.sql.SQLException;
 import java.util.List;
 
 public class WalletController {
@@ -58,9 +55,6 @@ public class WalletController {
     @FXML private PasswordField cardCvvField;
     @FXML private TextField cardExpirationField;
 
-
-    // ... (omesso codice precedente)
-
     // Componenti UI per Dettagli
     @FXML private Label detailDescriptionLabel;
     @FXML private Label detailTypeLabel;
@@ -86,34 +80,27 @@ public class WalletController {
     @FXML private Label detailExpirationTitle;
     @FXML private Label detailExpirationLabel;
 
-    // Istanziazione diretta dei Criptor per decriptazione singola
     private final LoginItemCriptor loginCriptor = new LoginItemCriptor();
     private final CreditCardCriptor creditCardCriptor = new CreditCardCriptor();
 
-    // Logica Applicativa
     private File walletDbFile;
     private Manager loginManager;
     private Manager creditCardManager;
     private final ObservableList<Item> walletItems = FXCollections.observableArrayList();
 
-    // Logica di Sicurezza (Timeout)
     private static final Duration TIMEOUT_DURATION = Duration.seconds(300); // 5 minuti
     private PauseTransition securityTimeout;
 
     @FXML
     public void initialize() {
-        // Nasconde la Dashboard e prepara la tabella
         mainTabPane.setVisible(false);
         descriptionColumn.setCellValueFactory(new PropertyValueFactory<>("description"));
         typeColumn.setCellValueFactory(new PropertyValueFactory<>("itemType"));
         itemTable.setItems(walletItems);
 
         setupTimeout();
+        clearDetails();
 
-        setupTimeout();
-        clearDetails(); // Inizializza i dettagli all'avvio
-
-        // NUOVO: Aggiungi listener di selezione alla tabella
         itemTable.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
             if (newSelection != null) {
                 showDetails(newSelection);
@@ -123,20 +110,67 @@ public class WalletController {
         });
     }
 
-    // Configura il timer di sicurezza
+    // -- GESTIONE SICUREZZA E STATO --
+
     private void setupTimeout() {
         securityTimeout = new PauseTransition(TIMEOUT_DURATION);
         securityTimeout.setOnFinished(event -> lockApplication());
     }
 
-    // Resetta il timer ad ogni interazione riuscita
     private void resetTimeout() {
         if (securityTimeout != null && mainTabPane.isVisible()) {
             securityTimeout.playFromStart();
         }
     }
 
-    // Metodo per la selezione del file DB
+    private void setupManagers() {
+        loginManager = new Manager(new LoginItemCriptor(), new LoginItemSaver());
+        creditCardManager = new Manager(new CreditCardCriptor(), new CreditCardSaver());
+    }
+
+    private void unlockApplication(List<Item> initialItems) {
+        messageLabel.setText("Accesso Riuscito!");
+        messageLabel.setStyle("-fx-text-fill: green;");
+
+        walletItems.setAll(initialItems);
+
+        loginContainer.setVisible(false);
+        mainTabPane.setVisible(true);
+
+        resetTimeout();
+    }
+
+    // Metodo per il blocco (RISOLVE IndexOutOfBoundsException)
+    private void lockApplication() {
+        // 1. Pulizia e blocco di sicurezza (Zeroing out)
+        CryptoUtils.masterPassSet("");
+
+        // 2. Utilizza Platform.runLater per eseguire la pulizia GUI in modo sicuro
+        // DOPO che JavaFX ha finito di elaborare tutti gli eventi di selezione e notifica.
+        javafx.application.Platform.runLater(() -> {
+            // Pulizia GUI (necessaria in caso di lock forzato)
+            mainTabPane.setVisible(false);
+            loginContainer.setVisible(true);
+
+            itemTable.getSelectionModel().clearSelection();
+            walletItems.clear();
+            clearDetails();
+
+            // Messaggi utente
+            dbPathLabel.setText("DB Selezionato: " + (walletDbFile != null ? walletDbFile.getName() : "Nessuno"));
+            messageLabel.setText("Sessione scaduta o bloccata. Reinserisci la Master Password.");
+            masterPasswordField.clear();
+        });
+    }
+
+    public void setupInteractionListener(Scene scene) {
+        scene.setOnMouseMoved(e -> resetTimeout());
+        scene.setOnMousePressed(e -> resetTimeout());
+        scene.setOnKeyPressed(e -> resetTimeout());
+    }
+
+    // -- AZIONI UI --
+
     @FXML
     protected void onSelectDbButtonClick() {
         FileChooser fileChooser = new FileChooser();
@@ -145,7 +179,6 @@ public class WalletController {
                 new FileChooser.ExtensionFilter("SQLite Database", "*.db")
         );
 
-        // Usa il componente come riferimento per la Stage
         Stage currentStage = (Stage) selectDbButton.getScene().getWindow();
         File selectedFile = fileChooser.showOpenDialog(currentStage);
 
@@ -153,16 +186,9 @@ public class WalletController {
             walletDbFile = selectedFile;
             dbPathLabel.setText("DB Selezionato: " + walletDbFile.getName());
 
-            // Aggiorna l'URL JDBC e forza l'inizializzazione del DB
             DbConnector.setJdbcUrl(walletDbFile.getAbsolutePath());
             messageLabel.setText("Inserisci la Master Password.");
         }
-    }
-
-    private void setupManagers() {
-        // Inizializza i Manager con i Saver che useranno il path del DB dinamico
-        loginManager = new Manager(new LoginItemCriptor(), new LoginItemSaver());
-        creditCardManager = new Manager(new CreditCardCriptor(), new CreditCardSaver());
     }
 
     @FXML
@@ -179,60 +205,40 @@ public class WalletController {
             return;
         }
 
-        // 1. Inizializza la chiave crittografica
         CryptoUtils.masterPassSet(masterPass);
 
         try {
             setupManagers();
 
-            // 2. Verifica l'autenticità tentando di caricare/decriptare i dati
             List<Item> initialItems = loginManager.caricaPoiDecripta();
             initialItems.addAll(creditCardManager.caricaPoiDecripta());
 
-            // Login riuscito: UNLOCK
             unlockApplication(initialItems);
 
         } catch (RuntimeException e) {
-            // Se la decrittografia fallisce (Tag GCM errato o eccezione SQL)
             messageLabel.setText("Password errata o file DB corrotto.");
             messageLabel.setStyle("-fx-text-fill: red;");
-
-            // 3. LOCK e pulisci la chiave in memoria
             lockApplication();
-            masterPasswordField.clear();
         }
     }
 
-    private void unlockApplication(List<Item> initialItems) {
-        messageLabel.setText("Accesso Riuscito!");
-        messageLabel.setStyle("-fx-text-fill: green;");
+    // -- GESTIONE DATI --
 
-        walletItems.setAll(initialItems);
+    private void handleSaveAndReload() {
+        try {
+            List<Item> updatedItems = loginManager.caricaPoiDecripta();
+            updatedItems.addAll(creditCardManager.caricaPoiDecripta());
 
-        // Nasconde i controlli di login/setup e mostra la Dashboard
-        loginContainer.setVisible(false);
-        mainTabPane.setVisible(true);
+            walletItems.setAll(updatedItems);
+            resetTimeout();
 
-        // Avvia il timer di timeout
-        resetTimeout();
+        } catch (RuntimeException e) {
+            messageLabel.setText("ERRORE: I dati sono stati corrotti durante l'aggiornamento. Blocco forzato.");
+            System.err.println("Errore durante il ricaricamento: " + e.getMessage());
+            lockApplication();
+        }
     }
 
-    // Metodo per il blocco (chiamato dal timeout o fallimento login)
-    private void lockApplication() {
-        // 1. Pulizia e blocco di sicurezza (Zeroing out)
-        CryptoUtils.masterPassSet("");
-
-        // 2. Aggiorna la GUI
-        mainTabPane.setVisible(false);
-        loginContainer.setVisible(true);
-        // Visualizza il path del DB selezionato, ma richiede re-login
-        dbPathLabel.setText("DB Selezionato: " + (walletDbFile != null ? walletDbFile.getName() : "Nessuno"));
-        messageLabel.setText("Sessione scaduta o bloccata. Reinserisci la Master Password.");
-        masterPasswordField.clear();
-        walletItems.clear(); // Pulisci i dati decriptati dalla memoria
-    }
-
-    // Logica di salvataggio del LoginItem
     @FXML
     protected void onSaveLoginClick() {
         String description = loginDescriptionField.getText();
@@ -240,52 +246,22 @@ public class WalletController {
         String password = loginPasswordField.getText();
         String url = loginUrlField.getText();
 
-        if (loginManager == null) {
-            messageLabel.setText("Errore di sessione: Manager non inizializzato.");
-            return;
-        }
-
-        if (description.isEmpty() || username.isEmpty() || password.isEmpty()) {
+        if (loginManager == null || description.isEmpty() || username.isEmpty() || password.isEmpty()) {
             messageLabel.setText("Descrizione, Username e Password sono obbligatori.");
             return;
         }
 
         LoginItem newItem = new LoginItem(description, username, password, url);
-
         try {
             loginManager.criptaPoiSalva(newItem);
-
-            // Ricarica tutti i dati (necessario per l'UPSERT)
-            List<Item> updatedItems = loginManager.caricaPoiDecripta();
-            updatedItems.addAll(creditCardManager.caricaPoiDecripta());
-
-            walletItems.setAll(updatedItems);
+            handleSaveAndReload();
 
             messageLabel.setText("Login salvato con successo: " + description);
-
-            // Pulisci i campi del form dopo il salvataggio
-            loginDescriptionField.clear();
-            loginUsernameField.clear();
-            loginPasswordField.clear();
-            loginUrlField.clear();
-
-            // SECURITY: Resetta il timer di timeout dopo un'attività riuscita
-            resetTimeout();
-
+            loginDescriptionField.clear(); loginUsernameField.clear(); loginPasswordField.clear(); loginUrlField.clear();
         } catch (RuntimeException e) {
-            messageLabel.setText("Errore durante il salvataggio nel database.");
-            System.err.println("Errore durante il salvataggio nel DB: " + e.getMessage());
+            messageLabel.setText("Errore durante il salvataggio nel DB.");
+            System.err.println("Errore di salvataggio: " + e.getMessage());
         }
-    }
-
-    // Metodo per aggiungere listener di interazione alla Scene (chiamato da WalletApplication)
-    public void setupInteractionListener(Scene scene) {
-        // Interazione del mouse
-        scene.setOnMouseMoved(e -> resetTimeout());
-        scene.setOnMousePressed(e -> resetTimeout());
-
-        // Interazione da tastiera
-        scene.setOnKeyPressed(e -> resetTimeout());
     }
 
     @FXML
@@ -297,86 +273,47 @@ public class WalletController {
         String cvv = cardCvvField.getText();
         String expiration = cardExpirationField.getText();
 
-        if (creditCardManager == null) {
-            messageLabel.setText("Errore di sessione: Manager non inizializzato.");
-            return;
-        }
-
-        if (description.isEmpty() || number.isEmpty() || cvv.isEmpty() || expiration.isEmpty()) {
+        if (creditCardManager == null || description.isEmpty() || number.isEmpty() || cvv.isEmpty() || expiration.isEmpty()) {
             messageLabel.setText("Descrizione, Numero Carta, CVV e Scadenza sono obbligatori.");
             return;
         }
 
-        // Puoi aggiungere qui la logica di validazione del formato del CVV o della scadenza se necessario.
-
         CreditCardItem newItem = new CreditCardItem(description, owner, bank, number, cvv, expiration);
-
         try {
-            // Salva (il manager cripta prima di salvare nel DB)
             creditCardManager.criptaPoiSalva(newItem);
-
-            // Ricarica tutti i dati (Login e Credit Card)
-            List<Item> updatedItems = loginManager.caricaPoiDecripta();
-            updatedItems.addAll(creditCardManager.caricaPoiDecripta());
-
-            // Aggiorna la tabella
-            walletItems.setAll(updatedItems);
+            handleSaveAndReload();
 
             messageLabel.setText("Carta salvata con successo: " + description);
-
-            // Pulisci i campi del form dopo il salvataggio
-            cardDescriptionField.clear();
-            cardOwnerField.clear();
-            cardBankField.clear();
-            cardNumberField.clear();
-            cardCvvField.clear();
-            cardExpirationField.clear();
-
-            // SECURITY: Resetta il timer di timeout dopo un'attività riuscita
-            resetTimeout();
-
+            cardDescriptionField.clear(); cardOwnerField.clear(); cardBankField.clear(); cardNumberField.clear(); cardCvvField.clear(); cardExpirationField.clear();
         } catch (RuntimeException e) {
-            messageLabel.setText("Errore durante il salvataggio nel database.");
-            System.err.println("Errore durante il salvataggio nel DB: " + e.getMessage());
+            messageLabel.setText("Errore durante il salvataggio nel DB.");
+            System.err.println("Errore di salvataggio: " + e.getMessage());
         }
     }
 
-    // Nasconde tutti i campi specifici e pulisce i dettagli
+    // -- GESTIONE DETTAGLI (Decrittografia in tempo reale) --
+
     private void clearDetails() {
-        // Nasconde tutti i campi Login
-        detailUsernameTitle.setVisible(false);
-        detailUsernameLabel.setVisible(false);
-        detailPasswordTitle.setVisible(false);
-        detailPasswordLabel.setVisible(false);
-        detailUrlTitle.setVisible(false);
-        detailUrlLabel.setVisible(false);
+        detailUsernameTitle.setVisible(false); detailUsernameLabel.setVisible(false);
+        detailPasswordTitle.setVisible(false); detailPasswordLabel.setVisible(false);
+        detailUrlTitle.setVisible(false); detailUrlLabel.setVisible(false);
+        detailOwnerTitle.setVisible(false); detailOwnerLabel.setVisible(false);
+        detailBankTitle.setVisible(false); detailBankLabel.setVisible(false);
+        detailNumberTitle.setVisible(false); detailNumberLabel.setVisible(false);
+        detailCvvTitle.setVisible(false); detailCvvLabel.setVisible(false);
+        detailExpirationTitle.setVisible(false); detailExpirationLabel.setVisible(false);
 
-        // Nasconde tutti i campi Credit Card
-        detailOwnerTitle.setVisible(false);
-        detailOwnerLabel.setVisible(false);
-        detailBankTitle.setVisible(false);
-        detailBankLabel.setVisible(false);
-        detailNumberTitle.setVisible(false);
-        detailNumberLabel.setVisible(false);
-        detailCvvTitle.setVisible(false);
-        detailCvvLabel.setVisible(false);
-        detailExpirationTitle.setVisible(false);
-        detailExpirationLabel.setVisible(false);
-
-        // Pulisce i campi comuni
         detailDescriptionLabel.setText("");
         detailTypeLabel.setText("");
         detailMessageLabel.setText("Seleziona un elemento per visualizzare i dettagli.");
     }
 
-    // Decripta l'elemento selezionato e lo visualizza
     private void showDetails(Item item) {
         clearDetails();
 
         try {
             Item decryptedItem;
 
-            // Decripta usando l'istanza corretta (Login o Credit Card)
             if (item.getItemType() == com.simonepugliese.Item.ItemType.LOGIN) {
                 decryptedItem = loginCriptor.decripta(item);
             } else if (item.getItemType() == com.simonepugliese.Item.ItemType.CREDITCARD) {
@@ -386,7 +323,6 @@ public class WalletController {
                 return;
             }
 
-            // SECURITY: Resetta il timer di timeout
             resetTimeout();
 
             // 1. Visualizza i campi comuni
@@ -396,42 +332,33 @@ public class WalletController {
 
             // 2. Visualizza i campi specifici
             if (decryptedItem instanceof com.simonepugliese.Item.LoginItem loginItem) {
-                detailUsernameTitle.setVisible(true);
-                detailUsernameLabel.setVisible(true);
+                detailUsernameTitle.setVisible(true); detailUsernameLabel.setVisible(true);
                 detailUsernameLabel.setText(loginItem.getUsername());
 
-                detailPasswordTitle.setVisible(true);
-                detailPasswordLabel.setVisible(true);
+                detailPasswordTitle.setVisible(true); detailPasswordLabel.setVisible(true);
                 detailPasswordLabel.setText(loginItem.getPassword());
 
-                detailUrlTitle.setVisible(true);
-                detailUrlLabel.setVisible(true);
+                detailUrlTitle.setVisible(true); detailUrlLabel.setVisible(true);
                 detailUrlLabel.setText(loginItem.getUrlSito());
 
             } else if (decryptedItem instanceof com.simonepugliese.Item.CreditCardItem creditCardItem) {
-                detailOwnerTitle.setVisible(true);
-                detailOwnerLabel.setVisible(true);
+                detailOwnerTitle.setVisible(true); detailOwnerLabel.setVisible(true);
                 detailOwnerLabel.setText(creditCardItem.getOwner());
 
-                detailBankTitle.setVisible(true);
-                detailBankLabel.setVisible(true);
+                detailBankTitle.setVisible(true); detailBankLabel.setVisible(true);
                 detailBankLabel.setText(creditCardItem.getBank());
 
-                detailNumberTitle.setVisible(true);
-                detailNumberLabel.setVisible(true);
+                detailNumberTitle.setVisible(true); detailNumberLabel.setVisible(true);
                 detailNumberLabel.setText(creditCardItem.getNumber()); // DATO SENSIBILE IN CHIARO
 
-                detailCvvTitle.setVisible(true);
-                detailCvvLabel.setVisible(true);
+                detailCvvTitle.setVisible(true); detailCvvLabel.setVisible(true);
                 detailCvvLabel.setText(creditCardItem.getCvv()); // DATO SENSIBILE IN CHIARO
 
-                detailExpirationTitle.setVisible(true);
-                detailExpirationLabel.setVisible(true);
+                detailExpirationTitle.setVisible(true); detailExpirationLabel.setVisible(true);
                 detailExpirationLabel.setText(creditCardItem.getExpiration());
             }
 
         } catch (RuntimeException e) {
-            // Decrittazione fallita (chiave in memoria sbagliata, Tag GCM errato)
             detailMessageLabel.setText("ERRORE DI DECRITTOGRAFIA. Forza blocco.");
             System.err.println("Errore di decrittografia su selezione: " + e.getMessage());
             lockApplication();
