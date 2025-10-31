@@ -7,7 +7,14 @@ import java.sql.Statement;
 
 public class DbConnector {
     private static DbConnector instance;
-    private static final String JDBC_URL = "jdbc:sqlite:wallet.db";
+    private static String JDBC_URL = "jdbc:sqlite:wallet.db";
+
+    public static void setJdbcUrl(String absolutePath) {
+        JDBC_URL = "jdbc:sqlite:" + absolutePath;
+        if (instance != null) {
+            instance.initializeDatabase();
+        }
+    }
 
     private DbConnector() {
         initializeDatabase();
