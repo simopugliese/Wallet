@@ -8,8 +8,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Manager {
-    private Criptor criptor;
-    private Saver saver;
+    private final Criptor criptor;
+    private final Saver saver;
 
     public Manager(Criptor criptor, Saver saver) {
         this.criptor = criptor;
@@ -22,7 +22,7 @@ public class Manager {
     }
 
     public List<Item> caricaPoiDecripta(){
-        List<Item> itemCaricatiCriptati = new ArrayList<>();
+        List<Item> itemCaricatiCriptati;
         itemCaricatiCriptati = saver.carica();
 
         List<Item> itemDecriptati = new ArrayList<>();
