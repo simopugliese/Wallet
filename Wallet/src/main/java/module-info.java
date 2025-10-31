@@ -2,6 +2,7 @@ module com.simonepugliese.wallet {
 
     requires javafx.controls;
     requires javafx.fxml;
+    requires javafx.base;
 
     requires java.sql;
     requires org.xerial.sqlitejdbc;
@@ -14,9 +15,9 @@ module com.simonepugliese.wallet {
 
     // Potresti anche voler aprire altri pacchetti, in base a dove risiedono i tuoi Controller
     // e le tue classi iniettate. Ad esempio:
+    opens com.simonepugliese.Item to javafx.fxml, javafx.base;
     opens com.simonepugliese.Manager to javafx.fxml;
     opens com.simonepugliese.Criptor to javafx.fxml;
-    opens com.simonepugliese.Item to javafx.fxml;
     opens com.simonepugliese.Saver to javafx.fxml;
     opens com.simonepugliese to javafx.fxml;
 

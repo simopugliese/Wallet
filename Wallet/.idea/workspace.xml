@@ -4,11 +4,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1bca0ee2-7bab-4d1d-812a-7e32be3dc1ea" name="Changes" comment="JavaFX">
+    <list default="true" id="1bca0ee2-7bab-4d1d-812a-7e32be3dc1ea" name="Changes" comment="Refactor">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/simonepugliese/App.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/simonepugliese/Item/CreditCardItem.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/simonepugliese/Item/CreditCardItem.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/simonepugliese/Item/LoginItem.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/simonepugliese/Item/LoginItem.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/simonepugliese/Saver/DbConnector.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/simonepugliese/Saver/DbConnector.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/simonepugliese/WalletApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/simonepugliese/WalletApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/simonepugliese/WalletController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/simonepugliese/WalletController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/module-info.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/wallet.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/wallet.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -59,6 +63,7 @@
   "keyToString": {
     "Application.App.executor": "Run",
     "Application.Field.executor": "Run",
+    "Application.WalletApplication.executor": "Run",
     "Application.main.executor": "Run",
     "JUnit.CryptoUtilsTest.executor": "Run",
     "JUnit.LoginItemCriptorTest.executor": "Run",
@@ -215,7 +220,7 @@
       <workItem from="1761916123667" duration="2859000" />
       <workItem from="1761921562324" duration="2714000" />
       <workItem from="1761942548024" duration="24000" />
-      <workItem from="1761942622168" duration="5629000" />
+      <workItem from="1761942622168" duration="6818000" />
     </task>
     <task id="LOCAL-00001" summary="created item">
       <option name="closed" value="true" />
@@ -409,7 +414,23 @@
       <option name="project" value="LOCAL" />
       <updated>1761948718686</updated>
     </task>
-    <option name="localTasksCounter" value="25" />
+    <task id="LOCAL-00025" summary="Refactor">
+      <option name="closed" value="true" />
+      <created>1761949037825</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1761949037825</updated>
+    </task>
+    <task id="LOCAL-00026" summary="Refactor">
+      <option name="closed" value="true" />
+      <created>1761949084851</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1761949084851</updated>
+    </task>
+    <option name="localTasksCounter" value="27" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -438,7 +459,6 @@
     <MESSAGE value="Typo correction in Logic Package" />
     <MESSAGE value="general improvement" />
     <MESSAGE value="tested" />
-    <MESSAGE value="Refactor" />
     <MESSAGE value="Implementation of Criptor and Saver" />
     <MESSAGE value="Refactoring of Criptor and Saver" />
     <MESSAGE value="An actual implementation of Cryptor was given" />
@@ -449,6 +469,7 @@
     <MESSAGE value="All tests passed" />
     <MESSAGE value="The pom.xml now supports JavaFX" />
     <MESSAGE value="JavaFX" />
-    <option name="LAST_COMMIT_MESSAGE" value="JavaFX" />
+    <MESSAGE value="Refactor" />
+    <option name="LAST_COMMIT_MESSAGE" value="Refactor" />
   </component>
 </project>
