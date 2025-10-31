@@ -12,8 +12,7 @@ import java.util.Base64;
 
 public class CryptoUtils {
 
-    // ⚠ DA SOSTITUIRE: Usare la password dell'utente o una chiave derivata in modo sicuro
-    private static final String MASTER_PASS_PLACEHOLDER = "LaMiaChiaveSegretaPerWallet";
+    private static String MASTER_PASS_PLACEHOLDER = "";
 
     private static final int GCM_IV_LENGTH = 12; // Initialization Vector (IV) length for GCM
     private static final int GCM_TAG_LENGTH = 16; // 128 bit Authentication Tag length
@@ -22,6 +21,10 @@ public class CryptoUtils {
     private static final int ITERATIONS = 65536; // PBKDF2 Iterations
     private static final String PBKDF2_ALGORITHM = "PBKDF2WithHmacSHA256";
     private static final String AES_ALGORITHM = "AES/GCM/NoPadding";
+
+    public static void masterPassSet(String mp){
+        MASTER_PASS_PLACEHOLDER = mp;
+    }
 
     private static final SecureRandom secureRandom = new SecureRandom();
 
