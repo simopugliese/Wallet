@@ -4,9 +4,9 @@ public class CreditCardItem extends Item{
     private String owner;
     private String bank;
     private String number;
-    private int cvv;
+    private String cvv;
 
-    public CreditCardItem(String description, String owner, String bank, String number, int cvv) {
+    public CreditCardItem(String description, String owner, String bank, String number, String cvv) {
         super(description, ItemType.CREDITCARD);
         this.owner = owner;
         this.bank = bank;
@@ -38,11 +38,11 @@ public class CreditCardItem extends Item{
         this.number = number;
     }
 
-    public int getCvv() {
+    public String getCvv() {
         return cvv;
     }
 
-    public void setCvv(int cvv) {
+    public void setCvv(String cvv) {
         this.cvv = cvv;
     }
 }
