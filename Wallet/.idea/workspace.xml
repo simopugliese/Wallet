@@ -4,9 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1bca0ee2-7bab-4d1d-812a-7e32be3dc1ea" name="Changes" comment="An actual implementation of Cryptor was given">
+    <list default="true" id="1bca0ee2-7bab-4d1d-812a-7e32be3dc1ea" name="Changes" comment="Security implementation">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/simonepugliese/Criptor/CreditCardCriptor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/simonepugliese/Criptor/CreditCardCriptor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/simonepugliese/Criptor/CryptoUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/simonepugliese/Criptor/CryptoUtils.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/simonepugliese/Item/CreditCardItem.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/simonepugliese/Item/CreditCardItem.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/wallet.db" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -156,7 +158,7 @@
       <workItem from="1761916123667" duration="2859000" />
       <workItem from="1761921562324" duration="2714000" />
       <workItem from="1761942548024" duration="24000" />
-      <workItem from="1761942622168" duration="2229000" />
+      <workItem from="1761942622168" duration="3048000" />
     </task>
     <task id="LOCAL-00001" summary="created item">
       <option name="closed" value="true" />
@@ -294,7 +296,15 @@
       <option name="project" value="LOCAL" />
       <updated>1761945149154</updated>
     </task>
-    <option name="localTasksCounter" value="18" />
+    <task id="LOCAL-00018" summary="Security implementation">
+      <option name="closed" value="true" />
+      <created>1761945567424</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1761945567424</updated>
+    </task>
+    <option name="localTasksCounter" value="19" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -327,6 +337,7 @@
     <MESSAGE value="Implementation of Criptor and Saver" />
     <MESSAGE value="Refactoring of Criptor and Saver" />
     <MESSAGE value="An actual implementation of Cryptor was given" />
-    <option name="LAST_COMMIT_MESSAGE" value="An actual implementation of Cryptor was given" />
+    <MESSAGE value="Security implementation" />
+    <option name="LAST_COMMIT_MESSAGE" value="Security implementation" />
   </component>
 </project>

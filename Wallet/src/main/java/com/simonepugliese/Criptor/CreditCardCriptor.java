@@ -11,11 +11,13 @@ public class CreditCardCriptor extends Criptor {
         String bank = CryptoUtils.encrypt(creditCardItem.getBank());
         String number = CryptoUtils.encrypt(creditCardItem.getNumber());
         String cvv = CryptoUtils.encrypt(creditCardItem.getCvv());
-        if (owner != null && bank != null && number != null && cvv != null) {
+        String expiration = CryptoUtils.encrypt(creditCardItem.getExpiration());
+        if (owner != null && bank != null && number != null && cvv != null && expiration != null) {
             creditCardItem.setOwner(owner);
             creditCardItem.setBank(bank);
             creditCardItem.setNumber(number);
             creditCardItem.setCvv(cvv);
+            creditCardItem.setExpiration(expiration);
             return creditCardItem;
         }
         return null;
@@ -28,11 +30,13 @@ public class CreditCardCriptor extends Criptor {
         String bank = CryptoUtils.decrypt(creditCardItem.getBank());
         String number = CryptoUtils.decrypt(creditCardItem.getNumber());
         String cvv = CryptoUtils.decrypt(creditCardItem.getCvv());
-        if (owner != null && bank != null && number != null && cvv != null) {
+        String expiration = CryptoUtils.decrypt(creditCardItem.getExpiration());
+        if (owner != null && bank != null && number != null && cvv != null && expiration != null) {
             creditCardItem.setOwner(owner);
             creditCardItem.setBank(bank);
             creditCardItem.setNumber(number);
             creditCardItem.setCvv(cvv);
+            creditCardItem.setExpiration(expiration);
             return creditCardItem;
         }
         return null;
