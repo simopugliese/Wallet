@@ -13,7 +13,6 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -54,13 +53,14 @@ public class HomeController {
     // ============================== NAVIGAZIONE ==============================
 
     /**
-     * Metodo generico per caricare la schermata di gestione (ManagementController/wallet.fxml).
+     * Metodo generico per caricare la schermata di gestione (ManagementController/ManagementView.fxml).
      */
     private void navigateToManagementScreen(String title, String initialTabId) {
         try {
             Stage stage = WalletApplication.getPrimaryStage();
 
-            FXMLLoader fxmlLoader = new FXMLLoader(WalletApplication.class.getResource("/wallet.fxml"));
+            // *** CORREZIONE QUI ***: Uso di getClass() e nome file corretto
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/ManagementView.fxml"));
             Scene scene = new Scene(fxmlLoader.load(), 800, 600);
 
             ManagementController managementController = fxmlLoader.getController();
@@ -75,7 +75,7 @@ public class HomeController {
         } catch (IOException e) {
             System.err.println("Errore nel caricamento della schermata di Gestione: " + e.getMessage());
             e.printStackTrace();
-            showAlert(AlertType.ERROR, "Errore di Navigazione", "Impossibile caricare la schermata di gestione.");
+            showAlert(AlertType.ERROR, "Errore di Navigazione", "Impossibile caricare la schermata di gestione. Controlla il nome FXML (ManagementView.fxml) e il percorso.");
         }
     }
 
@@ -91,8 +91,8 @@ public class HomeController {
 
     @FXML
     protected void onWifiTileClicked() {
-        showAlert(AlertType.INFORMATION, "Work in Progress", "La sezione WiFi è in fase di sviluppo. Per ora, navighiamo a Login.");
-        navigateToManagementScreen("WiFi", "loginTab"); // Placeholder
+        showAlert(AlertType.INFORMATION, "Work in Progress", "La sezione WiFi è in fase di sviluppo.");
+        // Non navighiamo se non è pronto: navigateToManagementScreen("WiFi", "wifiTab");
     }
 
     @FXML
@@ -120,7 +120,8 @@ public class HomeController {
             try {
                 Stage stage = WalletApplication.getPrimaryStage();
 
-                FXMLLoader fxmlLoader = new FXMLLoader(WalletApplication.class.getResource("/login.fxml"));
+                // Uso di getClass().getResource() per coerenza
+                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/login.fxml"));
                 Scene loginScene = new Scene(fxmlLoader.load(), 600, 400);
 
                 stage.setScene(loginScene);

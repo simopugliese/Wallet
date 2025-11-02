@@ -24,12 +24,12 @@
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-controls</artifactId>
-            <version>21.0.3</version>
+            <version>23.0.1</version>
         </dependency>
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-fxml</artifactId>
-            <version>21.0.3</version>
+            <version>23.0.1</version>
         </dependency>
     </dependencies>
 
@@ -37,7 +37,7 @@
         <maven.compiler.source>21</maven.compiler.source>
         <maven.compiler.target>21</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <javafx.version>21.0.3</javafx.version> <main.class>com.simonepugliese.WalletApplication</main.class>
+        <javafx.version>23.0.1</javafx.version> <main.class>com.simonepugliese.WalletApplication</main.class>
     </properties>
 
     <build>
