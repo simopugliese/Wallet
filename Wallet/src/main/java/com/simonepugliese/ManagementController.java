@@ -301,12 +301,12 @@ public class ManagementController {
         timeoutController.resetTimeout();
 
         try {
-            Item decryptedItem = null;
+            Item decryptedItem = item;
 
             if (item.getItemType() == com.simonepugliese.Item.ItemType.LOGIN) {
-                decryptedItem = loginCriptor.decripta(item);
+                //TODO: decryptedItem = loginCriptor.decripta(item);
             } else if (item.getItemType() == com.simonepugliese.Item.ItemType.CREDITCARD) {
-                decryptedItem = creditCardCriptor.decripta(item);
+                //TODO: decryptedItem = creditCardCriptor.decripta(item);
             } else if (item.getItemType() == com.simonepugliese.Item.ItemType.WIFI) {
                 // TODO: Implementare WifiCriptor e Manager
                 detailMessageLabel.setText("Dettagli WiFi: Funzionalità in arrivo!");
@@ -350,6 +350,7 @@ public class ManagementController {
         } catch (RuntimeException e) {
             detailMessageLabel.setText("ERRORE DI DECRITTOGRAFIA. Forza blocco.");
             System.err.println("Errore di decrittografia su selezione: " + e.getMessage());
+            e.printStackTrace();
             lockApplication();
         }
     }
