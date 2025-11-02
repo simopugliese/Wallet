@@ -88,7 +88,7 @@ public class WalletController {
     private Manager creditCardManager;
     private final ObservableList<Item> walletItems = FXCollections.observableArrayList();
 
-    private static final Duration TIMEOUT_DURATION = Duration.seconds(300); // 5 minuti
+    private static final Duration TIMEOUT_DURATION = Duration.seconds(300);
     private PauseTransition securityTimeout;
 
     @FXML
@@ -140,9 +140,7 @@ public class WalletController {
         resetTimeout();
     }
 
-    // Metodo per il blocco (RISOLVE IndexOutOfBoundsException)
     private void lockApplication() {
-        // 1. Pulizia e blocco di sicurezza (Zeroing out)
         CryptoUtils.masterPassSet("");
 
         // 2. Utilizza Platform.runLater per eseguire la pulizia GUI in modo sicuro
@@ -361,7 +359,8 @@ public class WalletController {
         } catch (RuntimeException e) {
             detailMessageLabel.setText("ERRORE DI DECRITTOGRAFIA. Forza blocco.");
             System.err.println("Errore di decrittografia su selezione: " + e.getMessage());
-            lockApplication();
+            e.printStackTrace();
+            //lockApplication();
         }
     }
 }
