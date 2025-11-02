@@ -5,32 +5,19 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="CENTER" prefHeight="600.0" prefWidth="800.0" spacing="20.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.simonepugliese.WalletController">
+<!-- AGGIORNATO: Controller ora è ManagementController -->
+<VBox alignment="CENTER" prefHeight="600.0" prefWidth="800.0" spacing="20.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.simonepugliese.ManagementController">
     <padding>
         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
     </padding>
 
-    <VBox fx:id="loginContainer" alignment="CENTER" spacing="10.0">
-        <Label text="Wallet Manager Login">
-            <font>
-                <Font size="24.0" />
-            </font>
-        </Label>
+    <!-- Pulsante di ritorno alla Home/Logout -->
+    <HBox alignment="TOP_RIGHT" VBox.vgrow="NEVER">
+        <Button onAction="#onLogoutClick" text="Torna alla Home" />
+    </HBox>
 
-        <HBox alignment="CENTER" spacing="10.0">
-            <Button fx:id="selectDbButton" onAction="#onSelectDbButtonClick" text="Seleziona File DB" />
-            <Label fx:id="dbPathLabel" text="Nessun DB selezionato" />
-        </HBox>
-
-        <PasswordField fx:id="masterPasswordField" promptText="Master Password" />
-
-        <Button fx:id="loginButton" onAction="#onLoginButtonClick" text="Accedi al Wallet" />
-
-        <Label fx:id="messageLabel" textFill="#ff0000" />
-    </VBox>
-
-    <TabPane fx:id="mainTabPane" prefHeight="450.0" prefWidth="760.0" tabClosingPolicy="UNAVAILABLE" visible="false">
-
+    <TabPane fx:id="mainTabPane" prefHeight="450.0" prefWidth="760.0" tabClosingPolicy="UNAVAILABLE" VBox.vgrow="ALWAYS">
+        <!-- Tab 1: Visualizza Elementi Salvati -->
         <Tab text="Visualizza Elementi Salvati">
             <SplitPane dividerPositions="0.6" prefHeight="400.0" prefWidth="760.0">
                 <items>
@@ -91,6 +78,7 @@
             </SplitPane>
         </Tab>
 
+        <!-- Tab 2: Aggiungi Login -->
         <Tab text="Aggiungi Login">
             <VBox alignment="TOP_LEFT" spacing="10.0">
                 <padding>
@@ -122,6 +110,7 @@
             </VBox>
         </Tab>
 
+        <!-- Tab 3: Aggiungi Carta di Credito -->
         <Tab text="Aggiungi Carta di Credito">
             <VBox alignment="TOP_LEFT" spacing="10.0">
                 <padding>
