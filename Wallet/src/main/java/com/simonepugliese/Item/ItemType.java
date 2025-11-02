@@ -2,5 +2,6 @@ package com.simonepugliese.Item;
 
 public enum ItemType {
     CREDITCARD,
-    LOGIN
+    LOGIN,
+    WIFI
 }

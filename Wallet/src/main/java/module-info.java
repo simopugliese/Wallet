@@ -6,6 +6,7 @@ module com.simonepugliese.wallet {
 
     requires java.sql;
     requires org.xerial.sqlitejdbc;
+    //requires com.simonepugliese.wallet;
 
     exports com.simonepugliese;
 
