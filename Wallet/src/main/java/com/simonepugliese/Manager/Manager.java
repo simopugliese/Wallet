@@ -33,4 +33,8 @@ public class Manager {
         });
         return itemDecriptati;
     }
+
+    public List<Item> carica(){
+        return saver.carica();
+    }
 }

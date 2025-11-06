@@ -90,10 +90,12 @@ public class LoginController {
             // 1. Inizializza i Manager
             loginManager = new Manager(new LoginItemCriptor(), new LoginItemSaver());
             creditCardManager = new Manager(new CreditCardCriptor(), new CreditCardSaver());
+            //TODO: implementare gli altri manager
 
             // 2. Tentativo di decrittografia (test di login)
-            List<Item> initialItems = loginManager.caricaPoiDecripta();
-            initialItems.addAll(creditCardManager.caricaPoiDecripta());
+            List<Item> initialItems = loginManager.carica();
+            initialItems.addAll(creditCardManager.carica());
+            //TODO: implementare gli altri carica()
 
             // 3. Login Riuscito: Passa alla Home Screen
             messageLabel.setText("Accesso Riuscito!");

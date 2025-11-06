@@ -4,10 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="2311eb0c-9617-475d-81cb-45c1be04ff75" name="Changes" comment="">
+    <list default="true" id="2311eb0c-9617-475d-81cb-45c1be04ff75" name="Changes" comment="Refactor">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Wallet/src/main/java/com/simonepugliese/Criptor/CryptoUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/Wallet/src/main/java/com/simonepugliese/Criptor/CryptoUtils.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Wallet/src/main/java/com/simonepugliese/Item/Item.java" beforeDir="false" afterPath="$PROJECT_DIR$/Wallet/src/main/java/com/simonepugliese/Item/Item.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Wallet/src/main/java/com/simonepugliese/LoginController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Wallet/src/main/java/com/simonepugliese/LoginController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Wallet/src/main/java/com/simonepugliese/Manager/Manager.java" beforeDir="false" afterPath="$PROJECT_DIR$/Wallet/src/main/java/com/simonepugliese/Manager/Manager.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -102,11 +101,24 @@
       <option name="presentableId" value="Default" />
       <updated>1761380303647</updated>
       <workItem from="1762437434469" duration="1049000" />
-      <workItem from="1762445198235" duration="302000" />
+      <workItem from="1762445198235" duration="963000" />
     </task>
+    <task id="LOCAL-00001" summary="Refactor">
+      <option name="closed" value="true" />
+      <created>1762445817719</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1762445817719</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Refactor" />
+    <option name="LAST_COMMIT_MESSAGE" value="Refactor" />
   </component>
 </project>
