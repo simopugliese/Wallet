@@ -6,9 +6,7 @@ module com.simonepugliese.wallet {
 
     requires java.sql;
     requires org.xerial.sqlitejdbc;
-    //requires com.simonepugliese.wallet;
 
-    exports com.simonepugliese;
 
     // Se i tuoi Controller fossero in un altro pacchetto, ad esempio com.simonepugliese.gui,
     // dovresti aprirlo separatamente:
