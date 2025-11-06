@@ -304,9 +304,11 @@ public class ManagementController {
             Item decryptedItem = item;
 
             if (item.getItemType() == com.simonepugliese.Item.ItemType.LOGIN) {
-                //TODO: decryptedItem = loginCriptor.decripta(item);
+                decryptedItem = loginCriptor.decripta(item);
+                // TODO: Controlla qui
             } else if (item.getItemType() == com.simonepugliese.Item.ItemType.CREDITCARD) {
-                //TODO: decryptedItem = creditCardCriptor.decripta(item);
+                decryptedItem = creditCardCriptor.decripta(item);
+                // TODO: Controlla qui
             } else if (item.getItemType() == com.simonepugliese.Item.ItemType.WIFI) {
                 // TODO: Implementare WifiCriptor e Manager
                 detailMessageLabel.setText("Dettagli WiFi: Funzionalità in arrivo!");

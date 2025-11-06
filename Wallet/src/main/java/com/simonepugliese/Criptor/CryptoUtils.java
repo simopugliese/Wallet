@@ -38,6 +38,7 @@ public class CryptoUtils {
             SecretKey secretKey = factory.generateSecret(spec);
             return new SecretKeySpec(secretKey.getEncoded(), "AES");
         } catch (Exception e) {
+            e.printStackTrace();
             throw new RuntimeException("Errore nella derivazione della chiave", e);
         }
     }
@@ -73,6 +74,7 @@ public class CryptoUtils {
             return Base64.getEncoder().encodeToString(byteBuffer.array());
 
         } catch (Exception e) {
+            e.printStackTrace();
             throw new RuntimeException("Crittografia fallita", e);
         }
     }
@@ -110,6 +112,7 @@ public class CryptoUtils {
 
         } catch (Exception e) {
             // Eccezione critica: se il Tag GCM non corrisponde o la chiave è errata, l'integrità è compromessa.
+            e.printStackTrace();
             System.err.println("AVVISO: Decrittografia fallita. I dati potrebbero essere corrotti o la chiave errata.");
             throw new RuntimeException("Decrittografia fallita", e);
         }

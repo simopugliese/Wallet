@@ -31,7 +31,6 @@ public class Manager {
             Item itemDecriptato = criptor.decripta(item);
             itemDecriptati.add(itemDecriptato);
         });
-        //TODO: controlla che il problema non sia qui
         return itemDecriptati;
     }
 }

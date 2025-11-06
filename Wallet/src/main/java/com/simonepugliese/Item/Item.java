@@ -1,8 +1,8 @@
 package com.simonepugliese.Item;
 
 public abstract class Item {
-    private String description;
-    private ItemType itemType;
+    private final String description;
+    private final ItemType itemType;
 
     public Item(String description, ItemType itemType) {
         this.description = description;
