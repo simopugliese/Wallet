@@ -9,7 +9,7 @@ public class WifiItemCriptor extends Criptor{
         WifiItem wifiItem = (WifiItem) item;
         String ssid = CryptoUtils.encrypt(wifiItem.getSSID());
         String password = CryptoUtils.encrypt(wifiItem.getPassword());
-        if (ssid != null & password != null) {
+        if (ssid != null && password != null) {
             wifiItem.setSSID(ssid);
             wifiItem.setPassword(password);
             return wifiItem;
@@ -22,7 +22,7 @@ public class WifiItemCriptor extends Criptor{
         WifiItem wifiItem = (WifiItem) item;
         String ssid = CryptoUtils.decrypt(wifiItem.getSSID());
         String password = CryptoUtils.decrypt(wifiItem.getPassword());
-        if (ssid != null & password != null) {
+        if (ssid != null && password != null) {
             wifiItem.setSSID(ssid);
             wifiItem.setPassword(password);
             return wifiItem;

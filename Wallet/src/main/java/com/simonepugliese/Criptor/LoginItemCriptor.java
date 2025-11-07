@@ -25,7 +25,7 @@ public class LoginItemCriptor extends Criptor{
         String username = CryptoUtils.decrypt(loginItem.getUsername());
         String password = CryptoUtils.decrypt(loginItem.getPassword());
         String urlSito = CryptoUtils.decrypt(loginItem.getUrlSito());
-        if (username != null & password != null & urlSito != null) {
+        if (username != null && password != null && urlSito != null) {
             loginItem.setUsername(username);
             loginItem.setPassword(password);
             loginItem.setUrlSito(urlSito);

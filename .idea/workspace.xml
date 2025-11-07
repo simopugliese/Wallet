@@ -4,11 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="2311eb0c-9617-475d-81cb-45c1be04ff75" name="Changes" comment="Refactor: GUI was full of bugs">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Wallet/src/main/java/com/simonepugliese/Item/ItemType.java" beforeDir="false" afterPath="$PROJECT_DIR$/Wallet/src/main/java/com/simonepugliese/Item/ItemType.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Wallet/src/main/java/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/Wallet/src/main/java/module-info.java" afterDir="false" />
-    </list>
+    <list default="true" id="2311eb0c-9617-475d-81cb-45c1be04ff75" name="Changes" comment="New Item: AppItem&#10;New Saver: AppItemSaver&#10;New Criptor: AppItemCriptor" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -36,6 +32,9 @@
     &quot;accountId&quot;: &quot;bdba1cac-0be2-4d03-a1a6-afe63a61e424&quot;
   }
 }</component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
+  </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 6
 }</component>
@@ -104,7 +103,7 @@
       <workItem from="1762445198235" duration="1253000" />
       <workItem from="1762446537493" duration="183000" />
       <workItem from="1762503547224" duration="8000" />
-      <workItem from="1762505697329" duration="835000" />
+      <workItem from="1762505697329" duration="1228000" />
     </task>
     <task id="LOCAL-00001" summary="Refactor">
       <option name="closed" value="true" />
@@ -130,7 +129,15 @@
       <option name="project" value="LOCAL" />
       <updated>1762446677547</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="New Item: AppItem&#10;New Saver: AppItemSaver&#10;New Criptor: AppItemCriptor">
+      <option name="closed" value="true" />
+      <created>1762506633219</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1762506633219</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -139,6 +146,7 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Refactor" />
     <MESSAGE value="Refactor: GUI was full of bugs" />
-    <option name="LAST_COMMIT_MESSAGE" value="Refactor: GUI was full of bugs" />
+    <MESSAGE value="New Item: AppItem&#10;New Saver: AppItemSaver&#10;New Criptor: AppItemCriptor" />
+    <option name="LAST_COMMIT_MESSAGE" value="New Item: AppItem&#10;New Saver: AppItemSaver&#10;New Criptor: AppItemCriptor" />
   </component>
 </project>
