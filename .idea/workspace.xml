@@ -4,8 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="2311eb0c-9617-475d-81cb-45c1be04ff75" name="Changes" comment="Refactor">
-      <change beforePath="$PROJECT_DIR$/Wallet/src/main/java/com/simonepugliese/ManagementController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Wallet/src/main/java/com/simonepugliese/ManagementController.java" afterDir="false" />
+    <list default="true" id="2311eb0c-9617-475d-81cb-45c1be04ff75" name="Changes" comment="Refactor: GUI was full of bugs">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Wallet/src/main/java/com/simonepugliese/Item/ItemType.java" beforeDir="false" afterPath="$PROJECT_DIR$/Wallet/src/main/java/com/simonepugliese/Item/ItemType.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Wallet/src/main/java/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/Wallet/src/main/java/module-info.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -100,6 +102,9 @@
       <updated>1761380303647</updated>
       <workItem from="1762437434469" duration="1049000" />
       <workItem from="1762445198235" duration="1253000" />
+      <workItem from="1762446537493" duration="183000" />
+      <workItem from="1762503547224" duration="8000" />
+      <workItem from="1762505697329" duration="835000" />
     </task>
     <task id="LOCAL-00001" summary="Refactor">
       <option name="closed" value="true" />
@@ -117,7 +122,15 @@
       <option name="project" value="LOCAL" />
       <updated>1762446180848</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Refactor: GUI was full of bugs">
+      <option name="closed" value="true" />
+      <created>1762446677547</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1762446677547</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -125,6 +138,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Refactor" />
-    <option name="LAST_COMMIT_MESSAGE" value="Refactor" />
+    <MESSAGE value="Refactor: GUI was full of bugs" />
+    <option name="LAST_COMMIT_MESSAGE" value="Refactor: GUI was full of bugs" />
   </component>
 </project>
