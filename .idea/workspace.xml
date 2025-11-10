@@ -4,8 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="2311eb0c-9617-475d-81cb-45c1be04ff75" name="Changes" comment="Delete tests">
+    <list default="true" id="2311eb0c-9617-475d-81cb-45c1be04ff75" name="Changes" comment="Created test">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Wallet/src/test/java/com/simonepugliese/Persistence/EntryCriptorTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Wallet/src/test/java/com/simonepugliese/Persistence/EntryCriptorTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Wallet/src/test/java/com/simonepugliese/Persistence/EntryRepositoryTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Wallet/src/test/java/com/simonepugliese/Persistence/EntryRepositoryTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Wallet/src/test/java/com/simonepugliese/Security/CryptoUtilsTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Wallet/src/test/java/com/simonepugliese/Security/CryptoUtilsTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -15,8 +18,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="JUnit5 Test Class" />
         <option value="Class" />
+        <option value="JUnit5 Test Class" />
       </list>
     </option>
   </component>
@@ -59,6 +62,8 @@
     &quot;Application.WalletApplication.executor&quot;: &quot;Run&quot;,
     &quot;Application.main.executor&quot;: &quot;Run&quot;,
     &quot;JUnit.All in Wallet.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.CryptoUtilsTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.EntryRepositoryTest.executor&quot;: &quot;Run&quot;,
     &quot;JUnit.WifiItemCriptorTest.executor&quot;: &quot;Run&quot;,
     &quot;JUnit.WifiItemSaverTest.executor&quot;: &quot;Run&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
@@ -91,24 +96,14 @@
       <recent name="" />
     </key>
     <key name="CreateTestDialog.RecentsKey">
+      <recent name="com.simonepugliese" />
+      <recent name="com.simonepugliese.Security" />
+      <recent name="com.simonepugliese.Persistence" />
+      <recent name="com.simonepugliese.Core" />
       <recent name="com.simonepugliese.Saver" />
-      <recent name="com.simonepugliese.Criptor" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.main">
-    <configuration name="WalletApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="com.simonepugliese.WalletApplication" />
-      <module name="Wallet" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.simonepugliese.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
+  <component name="RunManager" selected="JUnit.com.simonepugliese in Wallet">
     <configuration name="main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.simonepugliese.main" />
       <module name="Wallet" />
@@ -122,24 +117,31 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="All in Wallet" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="CryptoUtilsTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="Wallet" />
-      <option name="PACKAGE_NAME" value="" />
-      <option name="TEST_OBJECT" value="package" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.simonepugliese.Security.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.simonepugliese.Security" />
+      <option name="MAIN_CLASS_NAME" value="com.simonepugliese.Security.CryptoUtilsTest" />
+      <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="WifiItemCriptorTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="EntryRepositoryTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="Wallet" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="com.simonepugliese.Criptor.*" />
+          <option name="PATTERN" value="com.simonepugliese.Persistence.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="com.simonepugliese.Criptor" />
-      <option name="MAIN_CLASS_NAME" value="com.simonepugliese.Criptor.WifiItemCriptorTest" />
+      <option name="PACKAGE_NAME" value="com.simonepugliese.Persistence" />
+      <option name="MAIN_CLASS_NAME" value="com.simonepugliese.Persistence.EntryRepositoryTest" />
       <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -160,13 +162,27 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="com.simonepugliese in Wallet" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="Wallet" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.simonepugliese.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.simonepugliese" />
+      <option name="TEST_OBJECT" value="package" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.com.simonepugliese in Wallet" />
+        <item itemvalue="JUnit.EntryRepositoryTest" />
+        <item itemvalue="JUnit.CryptoUtilsTest" />
         <item itemvalue="Application.main" />
         <item itemvalue="JUnit.WifiItemSaverTest" />
-        <item itemvalue="JUnit.WifiItemCriptorTest" />
-        <item itemvalue="JUnit.All in Wallet" />
-        <item itemvalue="Application.WalletApplication" />
       </list>
     </recent_temporary>
   </component>
@@ -195,7 +211,7 @@
       <workItem from="1762764162156" duration="2133000" />
       <workItem from="1762770948569" duration="2885000" />
       <workItem from="1762775764394" duration="308000" />
-      <workItem from="1762780884090" duration="654000" />
+      <workItem from="1762780884090" duration="1006000" />
     </task>
     <task id="LOCAL-00001" summary="Refactor">
       <option name="closed" value="true" />
@@ -261,7 +277,15 @@
       <option name="project" value="LOCAL" />
       <updated>1762781144099</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="Created test">
+      <option name="closed" value="true" />
+      <created>1762781572343</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1762781572343</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -288,6 +312,7 @@
     <MESSAGE value="New Model, New Security, New Repository" />
     <MESSAGE value="Deleted old packages" />
     <MESSAGE value="Delete tests" />
-    <option name="LAST_COMMIT_MESSAGE" value="Delete tests" />
+    <MESSAGE value="Created test" />
+    <option name="LAST_COMMIT_MESSAGE" value="Created test" />
   </component>
 </project>
