@@ -14,52 +14,50 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
- * Test di integrazione per {@link EntryRepository}.
- * <p>
- * Questo test utilizza un database SQLite in-memory (":memory:")
- * per testare le operazioni CRUD (Create, Read, Update, Delete)
- * in modo isolato e veloce.
- * <p>
- * Verifica:
- * 1. Connessione in-memory.
- * 2. Salvataggio di una nuova Entry e dei suoi Fields.
- * 3. Caricamento di una Entry completa tramite ID.
- * 4. Aggiornamento (UPSERT) di una Entry e dei suoi Fields.
- * 5. Caricamento di tutti i riepiloghi (summaries) senza Fields.
- * 6. Cancellazione di una Entry.
+ * Integration test for {@link EntryRepository}.
+ *
+ * <p>This test uses a shared in-memory SQLite database
+ * to test CRUD (Create, Read, Update, Delete) operations
+ * in a fast and isolated manner.</p>
  */
 class EntryRepositoryTest {
 
     private static EntryRepository repository;
     private static DbConnector dbConnector;
 
+    /**
+     * Configures the DbConnector to use a shared in-memory SQLite database
+     * before any tests run. This is fast, isolated, and leaves no files.
+     */
     @BeforeAll
     static void setupDatabase() {
-        // Configura il DbConnector per usare un DB SQLite in-memory
-        // Questo è Veloce, Isolato e non lascia file sul disco.
-        DbConnector.setJdbcUrl("jdbc:sqlite::memory:");
-        dbConnector = DbConnector.getInstance(); // Questo inizializza le tabelle
+        // Use a shared in-memory DB path
+        DbConnector.setJdbcUrl("file::memory:?cache=shared"); // <-- FIX
+        dbConnector = DbConnector.getInstance(); // This initializes the tables
         repository = new EntryRepository();
     }
 
     /**
-     * Pulisce le tabelle prima di OGNI test per garantire l'isolamento.
+     * Cleans the tables before EACH test to ensure isolation.
      */
     @BeforeEach
     void cleanupTables() {
         try (Connection conn = dbConnector.getConnection();
              Statement stmt = conn.createStatement()) {
-            // Pulisce prima i campi (a causa della Foreign Key)
+            // Clean Fields first due to the Foreign Key constraint
             stmt.executeUpdate("DELETE FROM Fields");
-            // Poi pulisce le entries
             stmt.executeUpdate("DELETE FROM Entries");
         } catch (Exception e) {
-            fail("Pulizia DB fallita", e);
+            fail("DB cleanup failed", e);
         }
     }
 
     /**
-     * Crea una Entry di test complessa.
+     * Helper method to create a complex test Entry.
+     *
+     * @param description The description for the entry.
+     * @param category    The category for the entry.
+     * @return A new Entry object populated with test fields.
      */
     private Entry createTestEntry(String description, Category category) {
         Entry entry = new Entry(description, category);
@@ -69,14 +67,17 @@ class EntryRepositoryTest {
         return entry;
     }
 
+    /**
+     * Tests the full save -> findById cycle.
+     */
     @Test
     void save_and_findById_shouldReturnSavedEntryWithFields() {
         Entry entry = createTestEntry("Google", Category.LOGIN);
 
-        // 1. Salva
+        // 1. Save
         repository.save(entry);
 
-        // 2. Leggi
+        // 2. Read
         Optional<Entry> loadedOpt = repository.findById(entry.getId());
 
         // 3. Assert
@@ -87,86 +88,99 @@ class EntryRepositoryTest {
         assertEquals("Google", loaded.getDescription());
         assertEquals(Category.LOGIN, loaded.getCategory());
 
-        // Verifica i campi
+        // Verify fields
         assertEquals(3, loaded.getFields().size());
         assertEquals("user@test.com", loaded.getField("Username").getValue());
         assertEquals("encrypted-pass-value", loaded.getField("Password").getValue());
         assertTrue(loaded.getField("Password").isSensitive());
     }
 
+    /**
+     * Tests the UPSERT (UPDATE) logic when saving an entry with a conflicting ID.
+     */
     @Test
     void save_shouldUpdateExistingEntry_OnConflict() {
-        // 1. Crea e salva la versione 1
-        Entry entryV1 = createTestEntry("Sito V1", Category.GENERIC);
+        // 1. Create and save Version 1
+        Entry entryV1 = createTestEntry("Site V1", Category.GENERIC);
         repository.save(entryV1);
 
-        // 2. Modifica la entry (stesso ID)
-        entryV1.setDescription("Sito V2 - Aggiornato");
+        // 2. Modify the entry (same ID)
+        entryV1.setDescription("Site V2 - Updated");
         entryV1.setCategory(Category.LOGIN);
-        // Modifica un campo e aggiungine uno nuovo
-        entryV1.putField("Username", new Field("NUOVO_USER", FieldType.TEXT, false));
-        entryV1.putField("Note", new Field("Nota aggiunta", FieldType.NOTE, false));
+        // Modify a field and add a new one
+        entryV1.putField("Username", new Field("NEW_USER", FieldType.TEXT, false));
+        entryV1.putField("Note", new Field("Added note", FieldType.NOTE, false));
 
-        // 3. Salva di nuovo (questo è un UPSERT)
+        // 3. Save again (this should trigger an UPSERT)
         repository.save(entryV1);
 
-        // 4. Ricarica e verifica
+        // 4. Reload and verify
         Entry loadedV2 = repository.findById(entryV1.getId()).orElse(null);
         assertNotNull(loadedV2);
-        assertEquals("Sito V2 - Aggiornato", loadedV2.getDescription());
+        assertEquals("Site V2 - Updated", loadedV2.getDescription());
         assertEquals(Category.LOGIN, loadedV2.getCategory());
-        // L'UPSERT del repository (DELETE+INSERT) deve riflettere i campi V2
-        assertEquals(4, loadedV2.getFields().size()); // 3 originali + 1 nuovo
-        assertEquals("NUOVO_USER", loadedV2.getField("Username").getValue());
-        assertEquals("Nota aggiunta", loadedV2.getField("Note").getValue());
+        // The repo's (DELETE+INSERT) logic should reflect V2 fields
+        assertEquals(4, loadedV2.getFields().size()); // 3 original + 1 new
+        assertEquals("NEW_USER", loadedV2.getField("Username").getValue());
+        assertEquals("Added note", loadedV2.getField("Note").getValue());
     }
 
+    /**
+     * Tests that loading summaries returns only metadata (no fields)
+     * for performance.
+     */
     @Test
     void findAllSummaries_shouldReturnMetadataOnly() {
-        // 1. Salva due entries
+        // 1. Save two entries
         repository.save(createTestEntry("Entry 1", Category.LOGIN));
         repository.save(createTestEntry("Entry 2", Category.WIFI));
 
-        // 2. Carica i riepiloghi
+        // 2. Load summaries
         List<Entry> summaries = repository.findAllSummaries();
 
         // 3. Assert
         assertEquals(2, summaries.size());
         Entry summary = summaries.get(0);
 
-        // La proprietà chiave dei riepiloghi: NON devono avere campi caricati
-        // per essere veloci.
+        // The key property of summaries: they MUST NOT contain fields
+        // to ensure the load operation is lightweight.
         assertTrue(summary.getFields().isEmpty());
         assertNotNull(summary.getId());
         assertNotNull(summary.getDescription());
         assertNotNull(summary.getCategory());
     }
 
+    /**
+     * Tests that deleting an entry also removes its fields (due to ON DELETE CASCADE).
+     */
     @Test
     void deleteById_shouldRemoveEntryAndFields() {
-        // 1. Salva
-        Entry entry = createTestEntry("Da Cancellare", Category.SECURE_NOTE);
+        // 1. Save
+        Entry entry = createTestEntry("To Be Deleted", Category.SECURE_NOTE);
         repository.save(entry);
         String id = entry.getId();
 
-        // Verifica che esista
+        // Verify it exists
         assertTrue(repository.findById(id).isPresent());
 
-        // 2. Cancella
+        // 2. Delete
         boolean deleted = repository.deleteById(id);
         assertTrue(deleted);
 
-        // 3. Verifica che sia sparita
+        // 3. Verify it's gone
         assertFalse(repository.findById(id).isPresent());
 
-        // 4. Prova a cancellare di nuovo
+        // 4. Try deleting again
         boolean deletedAgain = repository.deleteById(id);
         assertFalse(deletedAgain);
     }
 
+    /**
+     * Tests that findById returns an empty Optional for an unknown ID.
+     */
     @Test
     void findById_shouldReturnEmptyForUnknownId() {
-        Optional<Entry> result = repository.findById("id-non-esistente");
+        Optional<Entry> result = repository.findById("non-existent-id");
         assertTrue(result.isEmpty());
     }
 }

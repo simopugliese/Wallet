@@ -4,11 +4,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="2311eb0c-9617-475d-81cb-45c1be04ff75" name="Changes" comment="Created test">
+    <list default="true" id="2311eb0c-9617-475d-81cb-45c1be04ff75" name="Changes" comment="Test writing">
+      <change afterPath="$PROJECT_DIR$/Wallet/src/test/java/com/simonepugliese/Model/EntryTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Wallet/src/test/java/com/simonepugliese/Core/WalletManagerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Wallet/src/test/java/com/simonepugliese/Core/WalletManagerTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Wallet/src/test/java/com/simonepugliese/Persistence/DbConnectorTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Wallet/src/test/java/com/simonepugliese/Persistence/DbConnectorTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Wallet/src/test/java/com/simonepugliese/Persistence/EntryCriptorTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Wallet/src/test/java/com/simonepugliese/Persistence/EntryCriptorTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Wallet/src/test/java/com/simonepugliese/Persistence/EntryRepositoryTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Wallet/src/test/java/com/simonepugliese/Persistence/EntryRepositoryTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Wallet/src/test/java/com/simonepugliese/Security/CryptoUtilsTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Wallet/src/test/java/com/simonepugliese/Security/CryptoUtilsTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Wallet/src/test/java/com/simonepugliese/WalletFactoryTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Wallet/src/test/java/com/simonepugliese/WalletFactoryTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -57,53 +61,55 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Application.WalletApplication.executor&quot;: &quot;Run&quot;,
-    &quot;Application.main.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.All in Wallet.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.CryptoUtilsTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.EntryRepositoryTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.WifiItemCriptorTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.WifiItemSaverTest.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultAutoModeForALLUsers.v1&quot;: &quot;true&quot;,
-    &quot;com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1&quot;: &quot;true&quot;,
-    &quot;com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary&quot;: &quot;JUnit5&quot;,
-    &quot;com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5&quot;: &quot;&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;junie.onboarding.icon.badge.shown&quot;: &quot;true&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;to.speed.mode.migration.done&quot;: &quot;true&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.WalletApplication.executor": "Run",
+    "Application.main.executor": "Run",
+    "JUnit.All in Wallet.executor": "Run",
+    "JUnit.CryptoUtilsTest.executor": "Run",
+    "JUnit.DbConnectorTest.executor": "Run",
+    "JUnit.EntryRepositoryTest.executor": "Run",
+    "JUnit.WifiItemCriptorTest.executor": "Run",
+    "JUnit.WifiItemSaverTest.executor": "Run",
+    "JUnit.com.simonepugliese in Wallet.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultAutoModeForALLUsers.v1": "true",
+    "com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1": "true",
+    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary": "JUnit5",
+    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5": "",
+    "git-widget-placeholder": "main",
+    "ignore.virus.scanning.warn.message": "true",
+    "junie.onboarding.icon.badge.shown": "true",
+    "kotlin-language-version-configured": "true",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "to.speed.mode.migration.done": "true",
+    "vue.rearranger.settings.migration": "true"
   },
-  &quot;keyToStringList&quot;: {
-    &quot;DatabaseDriversLRU&quot;: [
-      &quot;mysql&quot;,
-      &quot;sqlite&quot;
+  "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "sqlite",
+      "mysql"
     ]
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CreateTestDialog.Recents.Supers">
       <recent name="" />
     </key>
     <key name="CreateTestDialog.RecentsKey">
+      <recent name="com.simonepugliese.Model" />
       <recent name="com.simonepugliese" />
       <recent name="com.simonepugliese.Security" />
       <recent name="com.simonepugliese.Persistence" />
       <recent name="com.simonepugliese.Core" />
-      <recent name="com.simonepugliese.Saver" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.com.simonepugliese in Wallet">
+  <component name="RunManager" selected="JUnit.EntryRepositoryTest">
     <configuration name="main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.simonepugliese.main" />
       <module name="Wallet" />
@@ -132,6 +138,21 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="DbConnectorTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="Wallet" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.simonepugliese.Persistence.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.simonepugliese.Persistence" />
+      <option name="MAIN_CLASS_NAME" value="com.simonepugliese.Persistence.DbConnectorTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="EntryRepositoryTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="Wallet" />
       <extension name="coverage">
@@ -142,21 +163,6 @@
       </extension>
       <option name="PACKAGE_NAME" value="com.simonepugliese.Persistence" />
       <option name="MAIN_CLASS_NAME" value="com.simonepugliese.Persistence.EntryRepositoryTest" />
-      <option name="TEST_OBJECT" value="class" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="WifiItemSaverTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="Wallet" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.simonepugliese.Saver.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="com.simonepugliese.Saver" />
-      <option name="MAIN_CLASS_NAME" value="com.simonepugliese.Saver.WifiItemSaverTest" />
       <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -178,11 +184,11 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.com.simonepugliese in Wallet" />
         <item itemvalue="JUnit.EntryRepositoryTest" />
+        <item itemvalue="JUnit.DbConnectorTest" />
+        <item itemvalue="JUnit.com.simonepugliese in Wallet" />
         <item itemvalue="JUnit.CryptoUtilsTest" />
         <item itemvalue="Application.main" />
-        <item itemvalue="JUnit.WifiItemSaverTest" />
       </list>
     </recent_temporary>
   </component>
@@ -212,6 +218,7 @@
       <workItem from="1762770948569" duration="2885000" />
       <workItem from="1762775764394" duration="308000" />
       <workItem from="1762780884090" duration="1006000" />
+      <workItem from="1762781930944" duration="977000" />
     </task>
     <task id="LOCAL-00001" summary="Refactor">
       <option name="closed" value="true" />
@@ -285,7 +292,15 @@
       <option name="project" value="LOCAL" />
       <updated>1762781572343</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="Refactor of module-info.java">
+      <option name="closed" value="true" />
+      <created>1762782199489</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1762782199489</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -313,6 +328,8 @@
     <MESSAGE value="Deleted old packages" />
     <MESSAGE value="Delete tests" />
     <MESSAGE value="Created test" />
-    <option name="LAST_COMMIT_MESSAGE" value="Created test" />
+    <MESSAGE value="Refactor of module-info.java" />
+    <MESSAGE value="Test writing" />
+    <option name="LAST_COMMIT_MESSAGE" value="Test writing" />
   </component>
 </project>

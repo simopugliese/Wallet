@@ -12,10 +12,10 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
- * Test unitario per {@link EntryCriptor}.
- * <p>
- * Verifica che la strategia di crittografia applichi correttamente
- * {@link CryptoUtils} solo ai campi contrassegnati come 'sensitive'.
+ * Unit test for {@link EntryCriptor}.
+ *
+ * <p>This test verifies that the encryption strategy correctly applies
+ * {@link CryptoUtils} only to fields marked as 'sensitive'.</p>
  */
 class EntryCriptorTest {
 
@@ -24,9 +24,11 @@ class EntryCriptorTest {
     private static final String USERNAME_VAL = "user@example.com";
     private static final String PASSWORD_VAL = "P4$$w0rd_S3gret4!";
 
+    /**
+     * Initializes CryptoUtils, as EntryCriptor depends on it.
+     */
     @BeforeAll
     static void setupCrypto() {
-        // Il Criptor dipende da CryptoUtils, che deve essere inizializzato
         CryptoUtils.setMasterPassword(MASTER_PASS);
     }
 
@@ -36,54 +38,62 @@ class EntryCriptorTest {
     }
 
     /**
-     * Costruisce una Entry di test con un campo sensibile e uno non.
+     * Creates a test Entry with one sensitive and one non-sensitive field.
+     *
+     * @return A new Entry object for testing.
      */
     private Entry createTestEntry() {
         Entry entry = new Entry("Test Login", Category.LOGIN);
-        // Campo NON sensibile
+        // Non-sensitive field
         entry.putField("Username", new Field(USERNAME_VAL, FieldType.TEXT, false));
-        // Campo SENSIBILE
+        // Sensitive field
         entry.putField("Password", new Field(PASSWORD_VAL, FieldType.PASSWORD, true));
         return entry;
     }
 
+    /**
+     * Tests that the encrypt method only encrypts fields marked as sensitive.
+     */
     @Test
     void encrypt_shouldEncryptSensitiveFieldsOnly() {
         Entry entry = createTestEntry();
 
-        // Azione
+        // Action
         Entry encryptedEntry = criptor.encrypt(entry);
 
         // Assert
         Field usernameField = encryptedEntry.getField("Username");
         Field passwordField = encryptedEntry.getField("Password");
 
-        // Il campo non sensibile DEVE rimanere in chiaro
+        // The non-sensitive field MUST remain plaintext
         assertEquals(USERNAME_VAL, usernameField.getValue());
         assertFalse(usernameField.isSensitive());
 
-        // Il campo sensibile NON DEVE essere in chiaro
+        // The sensitive field MUST NOT be plaintext
         assertNotEquals(PASSWORD_VAL, passwordField.getValue());
         assertTrue(passwordField.isSensitive());
 
-        // Verifica che il valore sia decrittabile (cioè è stato criptato correttamente)
+        // Verify that the value is decryptable (i.e., was encrypted correctly)
         assertEquals(PASSWORD_VAL, CryptoUtils.decrypt(passwordField.getValue()));
     }
 
+    /**
+     * Tests that the decrypt method only decrypts fields marked as sensitive.
+     */
     @Test
     void decrypt_shouldDecryptSensitiveFieldsOnly() {
         Entry entry = createTestEntry();
-        // Simula una entry criptata (come se fosse letta dal DB)
+        // Simulate an encrypted entry (as if loaded from DB)
         String encryptedPassword = CryptoUtils.encrypt(PASSWORD_VAL);
         entry.getField("Password").setValue(encryptedPassword);
 
-        // Azione
+        // Action
         Entry decryptedEntry = criptor.decrypt(entry);
 
         // Assert
-        // Il campo non sensibile non è stato toccato
+        // Non-sensitive field was not touched
         assertEquals(USERNAME_VAL, decryptedEntry.getField("Username").getValue());
-        // Il campo sensibile è ora in chiaro
+        // Sensitive field is now plaintext
         assertEquals(PASSWORD_VAL, decryptedEntry.getField("Password").getValue());
     }
 }
