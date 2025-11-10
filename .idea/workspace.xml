@@ -4,8 +4,17 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="2311eb0c-9617-475d-81cb-45c1be04ff75" name="Changes" comment="&amp; was used instead of &amp;&amp;">
+    <list default="true" id="2311eb0c-9617-475d-81cb-45c1be04ff75" name="Changes" comment="New Model, New Security, New Repository">
+      <change afterPath="$PROJECT_DIR$/Wallet/src/main/java/com/simonepugliese/Core/ICriptor.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Wallet/src/main/java/com/simonepugliese/Core/IEntryRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Wallet/src/main/java/com/simonepugliese/Core/WalletManager.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Wallet/src/main/java/com/simonepugliese/Persistence/DbConnector.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Wallet/src/main/java/com/simonepugliese/Persistence/EntryCriptor.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Wallet/src/main/java/com/simonepugliese/Persistence/EntryRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Wallet/src/main/java/com/simonepugliese/Security/CryptoUtils.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Wallet/src/main/java/com/simonepugliese/WalletFactory.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Wallet/src/main/java/com/simonepugliese/main.java" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -15,8 +24,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Class" />
         <option value="JUnit5 Test Class" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -35,6 +44,10 @@
     &quot;accountId&quot;: &quot;bdba1cac-0be2-4d03-a1a6-afe63a61e424&quot;
   }
 }</component>
+  <component name="KubernetesApiPersistence">{}</component>
+  <component name="KubernetesApiProvider">{
+  &quot;isMigrated&quot;: true
+}</component>
   <component name="ProblemsViewState">
     <option name="selectedTabId" value="CurrentFile" />
   </component>
@@ -42,6 +55,9 @@
   &quot;associatedIndex&quot;: 6
 }</component>
   <component name="ProjectId" id="34YAoCTgiOAFza3ksR6oKP7o4Cm" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="1" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -49,6 +65,7 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "Application.WalletApplication.executor": "Run",
+    "Application.main.executor": "Run",
     "JUnit.All in Wallet.executor": "Run",
     "JUnit.WifiItemCriptorTest.executor": "Run",
     "JUnit.WifiItemSaverTest.executor": "Run",
@@ -69,11 +86,39 @@
     "nodejs_package_manager_path": "npm",
     "to.speed.mode.migration.done": "true",
     "vue.rearranger.settings.migration": "true"
+  },
+  "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "mysql",
+      "sqlite"
+    ]
   }
 }]]></component>
-  <component name="RunManager" selected="JUnit.WifiItemSaverTest">
+  <component name="RecentsManager">
+    <key name="CreateTestDialog.Recents.Supers">
+      <recent name="" />
+    </key>
+    <key name="CreateTestDialog.RecentsKey">
+      <recent name="com.simonepugliese.Saver" />
+      <recent name="com.simonepugliese.Criptor" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Application.main">
     <configuration name="WalletApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.simonepugliese.WalletApplication" />
+      <module name="Wallet" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.simonepugliese.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.simonepugliese.main" />
       <module name="Wallet" />
       <extension name="coverage">
         <pattern>
@@ -125,6 +170,7 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.main" />
         <item itemvalue="JUnit.WifiItemSaverTest" />
         <item itemvalue="JUnit.WifiItemCriptorTest" />
         <item itemvalue="JUnit.All in Wallet" />
@@ -153,7 +199,9 @@
       <workItem from="1762446537493" duration="183000" />
       <workItem from="1762503547224" duration="8000" />
       <workItem from="1762505697329" duration="2166000" />
-      <workItem from="1762761993403" duration="331000" />
+      <workItem from="1762761993403" duration="1167000" />
+      <workItem from="1762764162156" duration="2133000" />
+      <workItem from="1762770948569" duration="2885000" />
     </task>
     <task id="LOCAL-00001" summary="Refactor">
       <option name="closed" value="true" />
@@ -195,7 +243,23 @@
       <option name="project" value="LOCAL" />
       <updated>1762507058073</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="Tests for WifiItem">
+      <option name="closed" value="true" />
+      <created>1762762399723</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1762762399723</updated>
+    </task>
+    <task id="LOCAL-00007" summary="New Model">
+      <option name="closed" value="true" />
+      <created>1762771584629</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1762771584629</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -206,6 +270,9 @@
     <MESSAGE value="Refactor: GUI was full of bugs" />
     <MESSAGE value="New Item: AppItem&#10;New Saver: AppItemSaver&#10;New Criptor: AppItemCriptor" />
     <MESSAGE value="&amp; was used instead of &amp;&amp;" />
-    <option name="LAST_COMMIT_MESSAGE" value="&amp; was used instead of &amp;&amp;" />
+    <MESSAGE value="Tests for WifiItem" />
+    <MESSAGE value="New Model" />
+    <MESSAGE value="New Model, New Security, New Repository" />
+    <option name="LAST_COMMIT_MESSAGE" value="New Model, New Security, New Repository" />
   </component>
 </project>
