@@ -6,6 +6,7 @@ import com.simonepugliese.Model.Field;
 import com.simonepugliese.Model.FieldType;
 import org.junit.jupiter.api.*;
 
+// *** RIMOSSO: import java.lang.reflect.Field; ***
 import java.sql.Connection;
 import java.sql.Statement;
 import java.util.List;
@@ -31,8 +32,25 @@ class EntryRepositoryTest {
      */
     @BeforeAll
     static void setupDatabase() {
-        // Use a shared in-memory DB path
-        DbConnector.setJdbcUrl("file::memory:?cache=shared"); // <-- FIX
+        // *** AGGIUNGI QUESTA SEZIONE DI RESET ***
+        // Resetta il Singleton prima di fare qualsiasi altra cosa.
+        // Questo previene l'IllegalStateException causata dall'istanza
+        // "sporca" lasciata da DbConnectorTest.
+        try {
+            // *** MODIFICA: Usa il nome completo per evitare conflitti ***
+            java.lang.reflect.Field instanceField = DbConnector.class.getDeclaredField("instance");
+            instanceField.setAccessible(true);
+            instanceField.set(null, null);
+        } catch (Exception e) {
+            fail("Failed to reset Singleton instance via reflection", e);
+        }
+        // *** FINE SEZIONE RESET ***
+
+
+        // *** MODIFICA URL ***
+        // Usiamo un file separato per questo test per garantire l'isolamento.
+        DbConnector.setJdbcUrl("test_repo.db"); // <-- MODIFICATO
+
         dbConnector = DbConnector.getInstance(); // This initializes the tables
         repository = new EntryRepository();
     }

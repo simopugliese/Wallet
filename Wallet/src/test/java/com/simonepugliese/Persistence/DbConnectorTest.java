@@ -21,8 +21,11 @@ import static org.junit.jupiter.api.Assertions.*;
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class DbConnectorTest {
 
-    // This string ensures a shared in-memory database is used across connections
-    private static final String SHARED_IN_MEMORY_PATH = "file::memory:?cache=shared";
+    // *** MODIFICA ***
+    // Sostituito il DB in-memory con un file.
+    // Quello in-memory veniva distrutto alla chiusura della connessione
+    // nel costruttore, facendo fallire il test 'initializeDatabase'.
+    private static final String SHARED_IN_MEMORY_PATH = "test_connector.db";
 
     /**
      * Resets the static Singleton field before each test to ensure isolation.
@@ -47,7 +50,7 @@ class DbConnectorTest {
     @Test
     @Order(1)
     void setJdbcUrl_shouldThrowException_ifCalledAfterGetInstance() {
-        // 1. Ensure instance is created (using in-memory)
+        // 1. Ensure instance is created (using file db)
         DbConnector.setJdbcUrl(SHARED_IN_MEMORY_PATH); // <-- FIX
         DbConnector connector = DbConnector.getInstance();
         assertNotNull(connector);

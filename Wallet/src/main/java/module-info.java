@@ -6,7 +6,8 @@ module com.simonepugliese.wallet {
     requires java.sql;
     requires org.xerial.sqlitejdbc;
 
-    opens com.simonepugliese to javafx.fxml, javafx.graphics;
+    opens com.simonepugliese.Persistence to org.junit.platform.commons;
 
+    opens com.simonepugliese to javafx.fxml, javafx.graphics;
     opens com.simonepugliese.Model to javafx.base;
 }
