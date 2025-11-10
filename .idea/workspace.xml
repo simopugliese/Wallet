@@ -4,7 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="2311eb0c-9617-475d-81cb-45c1be04ff75" name="Changes" comment="New Model, New Security, New Repository" />
+    <list default="true" id="2311eb0c-9617-475d-81cb-45c1be04ff75" name="Changes" comment="Delete tests">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -193,6 +195,7 @@
       <workItem from="1762764162156" duration="2133000" />
       <workItem from="1762770948569" duration="2885000" />
       <workItem from="1762775764394" duration="308000" />
+      <workItem from="1762780884090" duration="654000" />
     </task>
     <task id="LOCAL-00001" summary="Refactor">
       <option name="closed" value="true" />
@@ -250,7 +253,15 @@
       <option name="project" value="LOCAL" />
       <updated>1762771584629</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="Delete tests">
+      <option name="closed" value="true" />
+      <created>1762781144099</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1762781144099</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -276,6 +287,7 @@
     <MESSAGE value="New Model" />
     <MESSAGE value="New Model, New Security, New Repository" />
     <MESSAGE value="Deleted old packages" />
-    <option name="LAST_COMMIT_MESSAGE" value="Deleted old packages" />
+    <MESSAGE value="Delete tests" />
+    <option name="LAST_COMMIT_MESSAGE" value="Delete tests" />
   </component>
 </project>
