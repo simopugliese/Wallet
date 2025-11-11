@@ -9,8 +9,12 @@ module com.simonepugliese.wallet {
     requires ch.qos.logback.classic;
     requires ch.qos.logback.core;
 
-    opens com.simonepugliese.Persistence to org.junit.platform.commons;
+    exports com.simonepugliese;
+    exports com.simonepugliese.Core;
+    exports com.simonepugliese.Model;
+    exports com.simonepugliese.Security;
 
+    opens com.simonepugliese.Persistence to org.junit.platform.commons;
     opens com.simonepugliese to javafx.fxml, javafx.graphics;
     opens com.simonepugliese.Model to javafx.base;
 }
