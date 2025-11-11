@@ -1,5 +1,8 @@
 package com.simonepugliese.Security;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import javax.crypto.Cipher;
 import javax.crypto.SecretKey;
 import javax.crypto.SecretKeyFactory;
@@ -18,6 +21,8 @@ import java.util.Base64;
  * It is final and cannot be instantiated.
  */
 public final class CryptoUtils {
+
+    private static final Logger log = LoggerFactory.getLogger(CryptoUtils.class);
 
     // --- Private constants ---
     private static final int GCM_IV_LENGTH = 12;
@@ -58,6 +63,7 @@ public final class CryptoUtils {
         MASTER_PASSWORD = password;
         // Attempt to nullify the reference (basic security measure)
         password = null;
+        log.info("Master password has been set.");
     }
 
     /**
@@ -79,7 +85,7 @@ public final class CryptoUtils {
             SecretKey secretKey = factory.generateSecret(spec);
             return new SecretKeySpec(secretKey.getEncoded(), "AES");
         } catch (Exception e) {
-            e.printStackTrace(); //TODO: Implement robust logging
+            log.error("Error deriving AES key from password", e);
             throw new RuntimeException("Error deriving AES key", e);
         }
     }
@@ -125,10 +131,11 @@ public final class CryptoUtils {
             byte[] cipherText = cipher.doFinal(plaintext.getBytes(java.nio.charset.StandardCharsets.UTF_8));
 
             EncryptedPayload payload = new EncryptedPayload(salt, iv, cipherText);
+            log.debug("Encryption successful.");
             return payload.toBase64();
 
         } catch (Exception e) {
-            e.printStackTrace(); //TODO: Implement robust logging
+            log.error("Encryption failed", e);
             throw new RuntimeException("Encryption failed", e);
         }
     }
@@ -151,11 +158,11 @@ public final class CryptoUtils {
 
             byte[] originalBytes = cipher.doFinal(payload.cipherText);
 
+            log.debug("Decryption successful.");
             return new String(originalBytes, java.nio.charset.StandardCharsets.UTF_8);
         } catch (Exception e) {
-            e.printStackTrace(); //TODO: Implement robust logging
-            System.err.println("WARNING: Decryption failed. Data may be corrupt or key is incorrect.");
-            throw new RuntimeException("Decryption failed", e);
+            log.warn("Decryption failed. Data may be corrupt or key is incorrect.", e);
+            throw new RuntimeException("Decryption failed", e);  //TODO: for a wrong password we crash the app????
         }
     }
 

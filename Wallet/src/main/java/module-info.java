@@ -5,6 +5,9 @@ module com.simonepugliese.wallet {
     requires javafx.base;
     requires java.sql;
     requires org.xerial.sqlitejdbc;
+    requires org.slf4j;
+    requires ch.qos.logback.classic;
+    requires ch.qos.logback.core;
 
     opens com.simonepugliese.Persistence to org.junit.platform.commons;
 

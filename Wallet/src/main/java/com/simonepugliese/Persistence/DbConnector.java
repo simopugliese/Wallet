@@ -1,5 +1,8 @@
 package com.simonepugliese.Persistence;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -12,6 +15,9 @@ import java.sql.Statement;
 public class DbConnector {
 
     private static volatile DbConnector instance;
+
+    private static final Logger log = LoggerFactory.getLogger(DbConnector.class);
+
     private static String JDBC_URL = "jdbc:sqlite:wallet.db";
 
     // --- Table Definitions ---
@@ -22,6 +28,7 @@ public class DbConnector {
      * Private constructor for Singleton pattern.
      */
     private DbConnector() {
+        log.debug("Initializing DbConnector for URL: {}", JDBC_URL);
         initializeDatabase();
     }
 
@@ -34,6 +41,7 @@ public class DbConnector {
         if (instance == null) {
             synchronized (DbConnector.class) {
                 if (instance == null) {
+                    log.debug("Creating/returning new DbConnector instance.");
                     instance = new DbConnector();
                 }
             }
@@ -49,9 +57,11 @@ public class DbConnector {
      */
     public static void setJdbcUrl(String absolutePath) {
         if (instance != null) {
+            log.error("Attempted to set JDBC URL after DbConnector instance was already created.");
             throw new IllegalStateException("Cannot set URL after instance is created.");
         }
         JDBC_URL = "jdbc:sqlite:" + absolutePath;
+        log.info("JDBC URL set to: {}", JDBC_URL);
     }
 
     /**
@@ -94,11 +104,10 @@ public class DbConnector {
             // Create an index for fast field lookups by entry_id
             stmt.execute("CREATE INDEX IF NOT EXISTS idx_entry_id ON " + TABLE_FIELDS + " (entry_id)");
 
-            System.out.println("Database tables checked/created successfully.");
+            log.info("Database tables checked/created successfully.");
 
         } catch (SQLException e) {
-            e.printStackTrace(); //TODO: more robust logging
-            System.err.println("Error initializing database: " + e.getMessage());
+            log.error("Error initializing database: " + e.getMessage(), e);
             throw new RuntimeException("Failed to initialize database", e);
         }
     }

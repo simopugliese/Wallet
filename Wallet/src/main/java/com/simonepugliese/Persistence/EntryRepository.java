@@ -5,6 +5,8 @@ import com.simonepugliese.Model.Category;
 import com.simonepugliese.Model.Entry;
 import com.simonepugliese.Model.Field;
 import com.simonepugliese.Model.FieldType;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -23,6 +25,8 @@ import java.util.UUID;
  * factory or main class.
  */
 public final class EntryRepository implements IEntryRepository {
+
+    private static final Logger log = LoggerFactory.getLogger(EntryRepository.class);
 
     // --- Private SQL Constants ---
     private static final String TABLE_ENTRIES = "Entries";
@@ -52,6 +56,7 @@ public final class EntryRepository implements IEntryRepository {
      */
     public EntryRepository() {
         this.dbConnector = DbConnector.getInstance();
+        log.debug("EntryRepository initialized.");
         // The DbConnector's constructor already called initializeDatabase()
     }
 
@@ -61,7 +66,9 @@ public final class EntryRepository implements IEntryRepository {
      */
     @Override
     public void save(Entry entry) {
+        log.debug("Beginning transaction to save entry: {}", entry.getId());
         Connection conn = null;
+        log.trace("Executing UPSERT for Entry: {}", entry.getId());
         try {
             conn = dbConnector.getConnection();
             conn.setAutoCommit(false); // Begin transaction
@@ -77,12 +84,14 @@ public final class EntryRepository implements IEntryRepository {
                 ps.executeUpdate();
             }
 
+            log.trace("Deleting old fields for Entry: {}", entry.getId());
             // Step 2: Delete all old Fields for this Entry (to ensure clean state)
             try (PreparedStatement ps = conn.prepareStatement(DELETE_FIELDS_SQL)) {
                 ps.setString(1, entry.getId());
                 ps.executeUpdate();
             }
 
+            log.trace("Batch inserting {} fields for Entry: {}", entry.getFields().size(), entry.getId());
             // Step 3: Insert all current Fields (Batch insert)
             try (PreparedStatement ps = conn.prepareStatement(INSERT_FIELD_SQL)) {
                 for (Map.Entry<String, Field> fieldEntry : entry.getFields().entrySet()) {
@@ -99,26 +108,28 @@ public final class EntryRepository implements IEntryRepository {
             }
 
             conn.commit(); // Commit transaction
+            log.debug("Transaction committed for entry: {}", entry.getId());
 
         } catch (SQLException e) {
-            System.err.println("Transaction failed. Rolling back.");
+            log.error("Transaction failed for entry: {}. Rolling back.", entry.getId(), e);
             try {
                 if (conn != null) conn.rollback();
             } catch (SQLException ex) {
-                ex.printStackTrace(); //TODO: Log rollback failure
+                log.error("Failed to rollback transaction", ex);
             }
             throw new RuntimeException("Failed to save entry", e);
         } finally {
             try {
                 if (conn != null) conn.setAutoCommit(true);
             } catch (SQLException e) {
-                e.printStackTrace(); //TODO: Log error
+                log.error("Failed to reset auto-commit", e);
             }
         }
     }
 
     @Override
     public Optional<Entry> findById(String id) {
+        log.debug("Executing findById for ID: {}", id);
         try (Connection conn = dbConnector.getConnection()) {
             // 1. Find the main Entry row
             Entry entry = null;
@@ -127,12 +138,14 @@ public final class EntryRepository implements IEntryRepository {
                 try (ResultSet rs = ps.executeQuery()) {
                     if (rs.next()) {
                         entry = mapResultSetToEntry(rs);
+                        log.trace("Found entry metadata for ID: {}", id);
                     }
                 }
             }
 
             // 2. If Entry exists, load its associated Fields
             if (entry != null) {
+                log.trace("Loading fields for entry: {}", id);
                 try (PreparedStatement ps = conn.prepareStatement(SELECT_FIELDS_BY_ENTRY_ID_SQL)) {
                     ps.setString(1, id);
                     try (ResultSet rs = ps.executeQuery()) {
@@ -141,17 +154,21 @@ public final class EntryRepository implements IEntryRepository {
                         }
                     }
                 }
+                log.debug("Successfully loaded entry and fields for ID: {}", id);
                 return Optional.of(entry);
             }
 
         } catch (SQLException e) {
+            log.error("Failed to find entry by ID: {}", id, e);
             throw new RuntimeException("Failed to find entry by ID", e);
         }
+        log.debug("No entry found for ID: {}", id);
         return Optional.empty();
     }
 
     @Override
     public List<Entry> findAllSummaries() {
+        log.debug("Executing findAllSummaries...");
         List<Entry> summaries = new ArrayList<>();
         try (Connection conn = dbConnector.getConnection();
              PreparedStatement ps = conn.prepareStatement(SELECT_ALL_ENTRY_SUMMARIES_SQL);
@@ -160,7 +177,9 @@ public final class EntryRepository implements IEntryRepository {
             while (rs.next()) {
                 summaries.add(mapResultSetToEntry(rs));
             }
+            log.debug("Found {} summaries.", summaries.size());
         } catch (SQLException e) {
+            log.error("Failed to load entry summaries", e);
             throw new RuntimeException("Failed to load entry summaries", e);
         }
         return summaries;
@@ -168,15 +187,22 @@ public final class EntryRepository implements IEntryRepository {
 
     @Override
     public boolean deleteById(String id) {
+        log.debug("Executing deleteById for ID: {}", id);
         try (Connection conn = dbConnector.getConnection()) {
             // We rely on "ON DELETE CASCADE" in the table definition.
             // If that was set, we only need to delete from the Entries table.
             try (PreparedStatement ps = conn.prepareStatement(DELETE_ENTRY_BY_ID_SQL)) {
                 ps.setString(1, id);
                 int affectedRows = ps.executeUpdate();
+                if (affectedRows > 0) {
+                    log.debug("Successfully deleted entry (and fields via cascade) for ID: {}", id);
+                } else {
+                    log.warn("No entry found to delete for ID: {}", id);
+                }
                 return affectedRows > 0;
             }
         } catch (SQLException e) {
+            log.error("Failed to delete entry: {}", id, e);
             throw new RuntimeException("Failed to delete entry", e);
         }
     }
