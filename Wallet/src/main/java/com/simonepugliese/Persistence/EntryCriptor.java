@@ -16,8 +16,8 @@ public final class EntryCriptor implements ICriptor {
     private final char[] masterPassword;
 
     /**
-     * Default constructor
-     * @param masterPassword The masterpassword
+     * Constructs a new EntryCriptor.
+     * @param masterPassword The master password.
      */
     public EntryCriptor(String masterPassword) {
         this.masterPassword = masterPassword.toCharArray();
