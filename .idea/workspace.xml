@@ -4,11 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="2311eb0c-9617-475d-81cb-45c1be04ff75" name="Changes" comment="Test writing">
+    <list default="true" id="2311eb0c-9617-475d-81cb-45c1be04ff75" name="Changes" comment="Main of test">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Wallet/src/main/java/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/Wallet/src/main/java/module-info.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Wallet/src/test/java/com/simonepugliese/Persistence/DbConnectorTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Wallet/src/test/java/com/simonepugliese/Persistence/DbConnectorTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Wallet/src/test/java/com/simonepugliese/Persistence/EntryRepositoryTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Wallet/src/test/java/com/simonepugliese/Persistence/EntryRepositoryTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -18,8 +15,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Class" />
         <option value="JUnit5 Test Class" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -59,6 +56,7 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "Application.TestConsoleApp.executor": "Run",
     "Application.WalletApplication.executor": "Run",
     "Application.main.executor": "Run",
     "JUnit.All in Wallet.executor": "Run",
@@ -214,7 +212,8 @@
       <workItem from="1762770948569" duration="2885000" />
       <workItem from="1762775764394" duration="308000" />
       <workItem from="1762780884090" duration="1006000" />
-      <workItem from="1762781930944" duration="1578000" />
+      <workItem from="1762781930944" duration="1719000" />
+      <workItem from="1762848450848" duration="731000" />
     </task>
     <task id="LOCAL-00001" summary="Refactor">
       <option name="closed" value="true" />
@@ -304,7 +303,23 @@
       <option name="project" value="LOCAL" />
       <updated>1762783039521</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="Test passed">
+      <option name="closed" value="true" />
+      <created>1762783647490</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1762783647490</updated>
+    </task>
+    <task id="LOCAL-00013" summary="Main of test">
+      <option name="closed" value="true" />
+      <created>1762849186790</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1762849186790</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -334,6 +349,8 @@
     <MESSAGE value="Created test" />
     <MESSAGE value="Refactor of module-info.java" />
     <MESSAGE value="Test writing" />
-    <option name="LAST_COMMIT_MESSAGE" value="Test writing" />
+    <MESSAGE value="Test passed" />
+    <MESSAGE value="Main of test" />
+    <option name="LAST_COMMIT_MESSAGE" value="Main of test" />
   </component>
 </project>
