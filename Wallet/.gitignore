@@ -8,6 +8,8 @@ target/
 .idea/jarRepositories.xml
 .idea/compiler.xml
 .idea/libraries/
+.idea/workspace.xml
+.idea/shelf/
 *.iws
 *.iml
 *.ipr
@@ -36,3 +38,9 @@ build/
 
 ### Mac OS ###
 .DS_Store
+
+# File DB di test
+test_repo.db
+test_connector.db
+wallet_main_test.db
+wallet.db
