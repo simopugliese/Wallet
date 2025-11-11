@@ -18,7 +18,7 @@ public class DbConnector {
 
     private static final Logger log = LoggerFactory.getLogger(DbConnector.class);
 
-    private static String JDBC_URL = "jdbc:sqlite:wallet.db";
+    private static final String JDBC_URL = "jdbc:sqlite:wallet.db";
 
     // --- Table Definitions ---
     private static final String TABLE_ENTRIES = "Entries";
@@ -47,21 +47,6 @@ public class DbConnector {
             }
         }
         return instance;
-    }
-
-    /**
-     * Sets a custom path for the database file.
-     * Must be called *before* {@link #getInstance()} for the first time.
-     *
-     * @param absolutePath The full, absolute path to the .db file.
-     */
-    public static void setJdbcUrl(String absolutePath) {
-        if (instance != null) {
-            log.error("Attempted to set JDBC URL after DbConnector instance was already created.");
-            throw new IllegalStateException("Cannot set URL after instance is created.");
-        }
-        JDBC_URL = "jdbc:sqlite:" + absolutePath;
-        log.info("JDBC URL set to: {}", JDBC_URL);
     }
 
     /**
@@ -107,7 +92,7 @@ public class DbConnector {
             log.info("Database tables checked/created successfully.");
 
         } catch (SQLException e) {
-            log.error("Error initializing database: " + e.getMessage(), e);
+            log.error("Error initializing database", e);
             throw new RuntimeException("Failed to initialize database", e);
         }
     }

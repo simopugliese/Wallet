@@ -16,15 +16,16 @@ public class WalletFactory {
      * Creates and configures the main {@link WalletManager}.
      * This is the only instance the UI (e.g., JavaFX App)
      * should need to hold.
+     * @param masterPassword The master password
      *
      * @return A fully configured WalletManager.
      */
-    public static WalletManager createWalletManager() {
+    public static WalletManager createWalletManager(String masterPassword) {
         // 1. Create the concrete persistence (repository)
         IEntryRepository repository = new EntryRepository();
 
         // 2. Create the concrete encryption (criptor)
-        ICriptor criptor = new EntryCriptor();
+        ICriptor criptor = new EntryCriptor(masterPassword);
 
         // 3. Inject them into the facade
         return new WalletManager(repository, criptor);

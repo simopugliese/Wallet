@@ -17,7 +17,7 @@ import java.util.Base64;
  * Utility class for handling AES-256 GCM encryption and decryption.
  * <p>
  * This class provides static methods to encrypt and decrypt strings based
- * on a master password set via {@link #setMasterPassword(String)}.
+ * on a master password.
  * It is final and cannot be instantiated.
  */
 public final class CryptoUtils {
@@ -34,13 +34,6 @@ public final class CryptoUtils {
     private static final String AES_ALGORITHM = "AES/GCM/NoPadding";
 
     /**
-     * The master password used to derive the encryption key.
-     * This is intentionally package-private to discourage access
-     * from outside the security context.
-     */
-    private static String MASTER_PASSWORD = "";
-
-    /**
      * A cryptographically secure random number generator.
      */
     private static final SecureRandom SECURE_RANDOM = new SecureRandom();
@@ -53,31 +46,18 @@ public final class CryptoUtils {
     }
 
     /**
-     * Sets the master password used for all encryption/decryption operations.
-     * This MUST be called by the application's entry point before
-     * any crypto operations are performed.
-     *
-     * @param password The user's master password.
-     */
-    public static void setMasterPassword(String password) {
-        MASTER_PASSWORD = password;
-        // Attempt to nullify the reference (basic security measure)
-        password = null;
-        log.info("Master password has been set.");
-    }
-
-    /**
      * Derives a 256-bit AES key from the master password and a salt
      * using PBKDF2.
      *
+     * @param password The char array with the password
      * @param saltBytes The random salt (16 bytes).
      * @return A SecretKey for use with AES.
      */
-    private static SecretKey getAESKey(byte[] saltBytes) {
+    private static SecretKey getAESKey(char[] password, byte[] saltBytes) {
         try {
             SecretKeyFactory factory = SecretKeyFactory.getInstance(PBKDF2_ALGORITHM);
             PBEKeySpec spec = new PBEKeySpec(
-                    MASTER_PASSWORD.toCharArray(),
+                    password,
                     saltBytes,
                     PBKDF2_ITERATIONS,
                     KEY_LENGTH_BITS
@@ -95,13 +75,14 @@ public final class CryptoUtils {
      * This helper method encapsulates the duplicated logic from encrypt() and decrypt().
      *
      * @param mode The cipher mode (Cipher.ENCRYPT_MODE or Cipher.DECRYPT_MODE).
+     * @param password The char array with the password
      * @param salt The 16-byte salt.
      * @param iv   The 12-byte IV.
      * @return An initialized Cipher.
      * @throws Exception if cipher initialization fails.
      */
-    private static Cipher createCipher(int mode, byte[] salt, byte[] iv) throws Exception {
-        SecretKey key = getAESKey(salt);
+    private static Cipher createCipher(int mode, char[] password, byte[] salt, byte[] iv) throws Exception {
+        SecretKey key = getAESKey(password, salt);
         Cipher cipher = Cipher.getInstance(AES_ALGORITHM);
         GCMParameterSpec gcmSpec = new GCMParameterSpec(GCM_TAG_LENGTH * 8, iv);
         cipher.init(mode, key, gcmSpec);
@@ -113,9 +94,10 @@ public final class CryptoUtils {
      * The output is a Base64 string containing: [Salt | IV | Ciphertext].
      *
      * @param plaintext The string to encrypt.
+     * @param password The char array with the password
      * @return The Base64 encoded ciphertext, or the original value if null/empty.
      */
-    public static String encrypt(String plaintext) {
+    public static String encrypt(String plaintext, char[] password) {
         if (plaintext == null || plaintext.isEmpty()) {
             return plaintext;
         }
@@ -126,7 +108,7 @@ public final class CryptoUtils {
             byte[] iv = new byte[GCM_IV_LENGTH];
             SECURE_RANDOM.nextBytes(iv);
 
-            Cipher cipher = createCipher(Cipher.ENCRYPT_MODE, salt, iv);
+            Cipher cipher = createCipher(Cipher.ENCRYPT_MODE, password, salt, iv);
 
             byte[] cipherText = cipher.doFinal(plaintext.getBytes(java.nio.charset.StandardCharsets.UTF_8));
 
@@ -144,11 +126,12 @@ public final class CryptoUtils {
      * Decrypts a Base64 encoded string (Salt | IV | Ciphertext).
      *
      * @param encryptedValue The Base64 string to decrypt.
+     * @param password The char array with the password
      * @return The original plaintext, or the original value if null/empty.
      * @throws DecryptionFailedException if the decryption fails, likely due to an
      * incorrect key or corrupt data.
      */
-    public static String decrypt(String encryptedValue) {
+    public static String decrypt(String encryptedValue, char[] password) {
         if (encryptedValue == null || encryptedValue.isEmpty()) {
             return encryptedValue;
         }
@@ -156,7 +139,7 @@ public final class CryptoUtils {
         try {
             EncryptedPayload payload = EncryptedPayload.fromBase64(encryptedValue);
 
-            Cipher cipher = createCipher(Cipher.DECRYPT_MODE, payload.salt, payload.iv);
+            Cipher cipher = createCipher(Cipher.DECRYPT_MODE, password, payload.salt, payload.iv);
 
             byte[] originalBytes = cipher.doFinal(payload.cipherText);
 

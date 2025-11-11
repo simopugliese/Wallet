@@ -13,10 +13,14 @@ import com.simonepugliese.Security.CryptoUtils;
  */
 public final class EntryCriptor implements ICriptor {
 
+    private final char[] masterPassword;
+
     /**
      * Default constructor
+     * @param masterPassword The masterpassword
      */
-    public EntryCriptor() {
+    public EntryCriptor(String masterPassword) {
+        this.masterPassword = masterPassword.toCharArray();
     }
 
     @Override
@@ -24,7 +28,7 @@ public final class EntryCriptor implements ICriptor {
         // Iterate over the map values (the Fields) and encrypt sensitive ones
         for (Field field : entry.getFields().values()) {
             if (field.isSensitive()) {
-                field.setValue(CryptoUtils.encrypt(field.getValue()));
+                field.setValue(CryptoUtils.encrypt(field.getValue(), masterPassword));
             }
         }
         return entry;
@@ -35,7 +39,7 @@ public final class EntryCriptor implements ICriptor {
         // Iterate and decrypt sensitive ones
         for (Field field : entry.getFields().values()) {
             if (field.isSensitive()) {
-                field.setValue(CryptoUtils.decrypt(field.getValue()));
+                field.setValue(CryptoUtils.decrypt(field.getValue(), masterPassword));
             }
         }
         return entry;
