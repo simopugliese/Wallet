@@ -145,6 +145,8 @@ public final class CryptoUtils {
      *
      * @param encryptedValue The Base64 string to decrypt.
      * @return The original plaintext, or the original value if null/empty.
+     * @throws DecryptionFailedException if the decryption fails, likely due to an
+     * incorrect key or corrupt data.
      */
     public static String decrypt(String encryptedValue) {
         if (encryptedValue == null || encryptedValue.isEmpty()) {
@@ -162,7 +164,7 @@ public final class CryptoUtils {
             return new String(originalBytes, java.nio.charset.StandardCharsets.UTF_8);
         } catch (Exception e) {
             log.warn("Decryption failed. Data may be corrupt or key is incorrect.", e);
-            throw new RuntimeException("Decryption failed", e);  //TODO: for a wrong password we crash the app????
+            throw new DecryptionFailedException("Decryption failed, likely due to incorrect key or corrupt data", e);
         }
     }
 

@@ -1,6 +1,7 @@
 package com.simonepugliese.Core;
 
 import com.simonepugliese.Model.Entry;
+import com.simonepugliese.Security.DecryptionFailedException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -57,24 +58,28 @@ public final class WalletManager {
      * Loads a single, fully-detailed Entry and decrypts it.
      *
      * @param id The unique ID of the entry to load.
-     * @return The fully decrypted Entry, ready for editing, or empty.
+     * @return The fully decrypted Entry, ready for editing, or an empty Optional
+     * if the entry was not found or a DB error occurred.
+     * @throws DecryptionFailedException if the entry is found but decryption fails
+     * (e.g., due to an incorrect master password).
      */
-    public Optional<Entry> loadAndDecryptEntry(String id) {
+    public Optional<Entry> loadAndDecryptEntry(String id) throws DecryptionFailedException {
         log.info("Loading and decrypting entry (ID: {})...", id);
-        // Load (data is encrypted)
-        try {
-            Optional<Entry> encryptedEntry = repository.findById(id);
 
-            if (encryptedEntry.isEmpty()) {
-                log.warn("No entry found for ID: {}", id);
-                return Optional.empty();
-            }
-            log.debug("Entry found, decrypting...");
-            return encryptedEntry.map(criptor::decrypt);
+        Optional<Entry> encryptedEntry;
+        try {
+            encryptedEntry = repository.findById(id);
         } catch (Exception e) {
-            log.error("Failed to load or decrypt entry (ID: {})", id, e);
+            log.error("Failed to load entry from repository (ID: {})", id, e);
             return Optional.empty();
         }
+
+        if (encryptedEntry.isEmpty()) {
+            log.warn("No entry found for ID: {}", id);
+            return Optional.empty();
+        }
+        log.debug("Entry found, decrypting...");
+        return encryptedEntry.map(criptor::decrypt);
     }
 
     /**
