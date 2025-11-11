@@ -1,3 +1,5 @@
+// File: src/test/java/com/simonepugliese/Persistence/DbConnectorTest.java
+
 package com.simonepugliese.Persistence;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -10,6 +12,9 @@ import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
+// Import aggiunti per l'eliminazione del file
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
@@ -19,17 +24,27 @@ import static org.junit.jupiter.api.Assertions.*;
 class DbConnectorTest {
 
     /**
-     * Resettiamo il Singleton tra i test per garantire l'isolamento.
-     * Questo è FONDAMENTALE per testare l'inizializzazione.
+     * Resettiamo il Singleton E CANCELLIAMO IL DB
+     * prima di ogni test per garantire isolamento totale.
+     * Questo costringe 'getInstance()' a rieseguire
+     * 'initializeDatabase()' ogni volta.
      */
     @BeforeEach
-    void resetSingleton() {
+    void resetSingletonAndDatabaseFile() {
+        // 1. Resetta il singleton (necessario per testare l'init)
         try {
             Field instanceField = DbConnector.class.getDeclaredField("instance");
             instanceField.setAccessible(true);
             instanceField.set(null, null);
         } catch (Exception e) {
             fail("Fallito reset del Singleton via reflection", e);
+        }
+
+        // 2. Elimina fisicamente il file DB per forzare la ri-creazione
+        try {
+            Files.deleteIfExists(Paths.get("wallet.db"));
+        } catch (Exception e) {
+            fail("Fallita eliminazione del file wallet.db", e);
         }
     }
 
@@ -48,11 +63,12 @@ class DbConnectorTest {
 
     /**
      * SCENARIO 2 (Schema Init): Verifica che il costruttore (chiamato
-     * da getInstance) crei le tabelle.
+     * da getInstance) crei le tabelle su un file DB pulito.
      */
     @Test
     void initializeDatabase_shouldCreateTables_onFirstGetInstance() {
         // Azione: la prima chiamata a getInstance() triggera il costruttore
+        // e la creazione del file wallet.db
         DbConnector connector = DbConnector.getInstance();
         assertNotNull(connector);
 
@@ -77,20 +93,16 @@ class DbConnectorTest {
     @Test
     void getInstance_shouldReturnSameInstance_inConcurrentCalls() throws InterruptedException {
         int numThreads = 100;
-        // Usiamo un Set thread-safe per collezionare le istanze.
-        // Se il Singleton funziona, questo set conterrà UN SOLO elemento.
         Set<DbConnector> instances = Collections.newSetFromMap(new ConcurrentHashMap<>());
 
         var executor = Executors.newFixedThreadPool(numThreads);
 
-        // Azione: 100 thread diversi chiamano getInstance()
         for (int i = 0; i < numThreads; i++) {
             executor.submit(() -> {
                 instances.add(DbConnector.getInstance());
             });
         }
 
-        // Aspettiamo che tutti i thread finiscano
         executor.shutdown();
         executor.awaitTermination(5, TimeUnit.SECONDS);
 

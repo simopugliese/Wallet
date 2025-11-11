@@ -10,8 +10,10 @@ import com.simonepugliese.Security.CryptoUtils;
  * <p>
  * It iterates over the fields of an Entry and encrypts/decrypts
  * them based on their 'sensitive' flag.
+ * <p>
+ * Implements AutoCloseable to securely zero-out the password from memory.
  */
-public final class EntryCriptor implements ICriptor {
+public final class EntryCriptor implements ICriptor, AutoCloseable {
 
     private final char[] masterPassword;
 
@@ -43,5 +45,10 @@ public final class EntryCriptor implements ICriptor {
             }
         }
         return entry;
+    }
+
+    @Override
+    public void close() {
+        java.util.Arrays.fill(masterPassword, '\0');
     }
 }

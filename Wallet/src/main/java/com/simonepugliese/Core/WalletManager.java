@@ -15,7 +15,7 @@ import java.util.Optional;
  * the repository and criptor. It ensures that data is always
  * encrypted before saving and decrypted after loading.
  */
-public final class WalletManager {
+public final class WalletManager implements AutoCloseable{
 
     private static final Logger log = LoggerFactory.getLogger(WalletManager.class);
 
@@ -111,6 +111,18 @@ public final class WalletManager {
             //TODO: notify Observers
         } catch (Exception e) {
             log.error("Failed to delete entry (ID: {})", id, e);
+        }
+    }
+
+    @Override
+    public void close() {
+        if (criptor instanceof AutoCloseable) {
+            try {
+                ((AutoCloseable) criptor).close();
+                log.info("WalletManager chiuso e password azzerata.");
+            } catch (Exception e) {
+                log.warn("Errore durante la chiusura del Criptor", e);
+            }
         }
     }
 }

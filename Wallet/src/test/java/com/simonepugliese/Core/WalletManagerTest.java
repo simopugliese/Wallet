@@ -1,12 +1,16 @@
+// File: src/test/java/com/simonepugliese/Core/WalletManagerTest.java
+
 package com.simonepugliese.Core;
 
 import com.simonepugliese.Model.Category;
 import com.simonepugliese.Model.Entry;
+import com.simonepugliese.Security.DecryptionFailedException; // Import aggiunto
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Function; // Import aggiunto
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -16,8 +20,6 @@ import static org.junit.jupiter.api.Assertions.*;
  * <p>Questo test usa un approccio "Mockist" per verificare la
  * LOGICA DI COORDINAZIONE del manager, isolandolo dalle
  * implementazioni concrete di IEntryRepository e ICriptor.</p>
- *
- * <p>Verifichiamo che il Manager chiami i metodi giusti nell'ordine giusto.</p>
  */
 class WalletManagerTest {
 
@@ -32,7 +34,6 @@ class WalletManagerTest {
 
     @BeforeEach
     void setup() {
-        // Inizializza mock e dati per ogni test
         mockRepository = new MockEntryRepository();
         mockCriptor = new MockCriptor();
         manager = new WalletManager(mockRepository, mockCriptor);
@@ -40,7 +41,6 @@ class WalletManagerTest {
         plaintextEntry = new Entry("Test", Category.LOGIN);
         encryptedEntry = new Entry("Test", Category.LOGIN);
 
-        // Simula la relazione tra i due
         mockCriptor.plaintext = plaintextEntry;
         mockCriptor.encrypted = encryptedEntry;
         mockRepository.entryToReturn = encryptedEntry;
@@ -55,14 +55,9 @@ class WalletManagerTest {
         manager.saveEntry(plaintextEntry);
 
         // Assert
-        // 1. Deve aver chiamato encrypt()
         assertEquals(1, mockCriptor.encryptCallCount, "encrypt() deve essere chiamato 1 volta");
-        // 2. L'entry passata a encrypt deve essere quella in chiaro
         assertSame(plaintextEntry, mockCriptor.lastEntryEncrypted, "L'entry da cifrare è quella in chiaro");
-
-        // 3. Deve aver chiamato save()
         assertEquals(1, mockRepository.saveCallCount, "save() deve essere chiamato 1 volta");
-        // 4. L'entry passata a save deve essere quella cifrata (restituita da encrypt)
         assertSame(encryptedEntry, mockRepository.lastEntrySaved, "L'entry da salvare è quella cifrata");
     }
 
@@ -77,16 +72,10 @@ class WalletManagerTest {
         Optional<Entry> result = manager.loadAndDecryptEntry(testId);
 
         // Assert
-        // 1. Deve aver chiamato findById()
         assertEquals(1, mockRepository.findByIdCallCount, "findById() deve essere chiamato 1 volta");
         assertEquals(testId, mockRepository.lastIdLoaded);
-
-        // 2. Deve aver chiamato decrypt() (perché findById ha trovato un'entry)
         assertEquals(1, mockCriptor.decryptCallCount, "decrypt() deve essere chiamato 1 volta");
-        // 3. L'entry passata a decrypt deve essere quella cifrata
         assertSame(encryptedEntry, mockCriptor.lastEntryDecrypted, "L'entry da decifrare è quella cifrata");
-
-        // 4. Il risultato finale deve essere l'entry decifrata
         assertTrue(result.isPresent());
         assertSame(plaintextEntry, result.get(), "Il risultato deve essere l'entry in chiaro");
     }
@@ -104,11 +93,8 @@ class WalletManagerTest {
         Optional<Entry> result = manager.loadAndDecryptEntry("404");
 
         // Assert
-        // 1. Ha provato a caricare
         assertEquals(1, mockRepository.findByIdCallCount);
-        // 2. NON DEVE chiamare decrypt
         assertEquals(0, mockCriptor.decryptCallCount, "Decrypt NON deve essere chiamato se l'entry non è trovata");
-        // 3. Il risultato deve essere vuoto
         assertTrue(result.isEmpty());
     }
 
@@ -122,9 +108,7 @@ class WalletManagerTest {
         manager.loadAllEntrySummaries();
 
         // Assert
-        // 1. Deve aver chiamato il repository
         assertEquals(1, mockRepository.findAllSummariesCallCount);
-        // 2. NON DEVE chiamare il Criptor
         assertEquals(0, mockCriptor.decryptCallCount, "Il criptor non deve essere usato per i riepiloghi");
         assertEquals(0, mockCriptor.encryptCallCount, "Il criptor non deve essere usato per i riepiloghi");
     }
@@ -142,9 +126,30 @@ class WalletManagerTest {
         // Assert
         assertEquals(1, mockRepository.deleteByIdCallCount);
         assertEquals(testId, mockRepository.lastIdDeleted);
-        // Nessuna operazione crypto necessaria
         assertEquals(0, mockCriptor.decryptCallCount);
         assertEquals(0, mockCriptor.encryptCallCount);
+    }
+
+    /**
+     * SCENARIO 6 (Cattivo - CRITICO): Verifica che se il decrypt fallisce
+     * (es. password errata), l'eccezione si propaghi correttamente.
+     */
+    @Test
+    void loadAndDecryptEntry_shouldPropagateDecryptionFailedException() {
+        // Setup: Il repository TROVA l'entry cifrata
+        mockRepository.entryToReturn = encryptedEntry;
+
+        // Setup: Il criptor FALLISCE (lancia l'eccezione)
+        // Iniettiamo il comportamento di fallimento nel mock
+        mockCriptor.decryptBehavior = (entry) -> {
+            throw new DecryptionFailedException("Simulazione password errata", null);
+        };
+
+        // Azione e Assert: Verifica che il WalletManager propaghi l'eccezione
+        assertThrows(DecryptionFailedException.class, () -> manager.loadAndDecryptEntry("123"), "Il WalletManager deve propagare la DecryptionFailedException dal Criptor");
+
+        // Verifica che il manager abbia effettivamente provato a decifrare
+        assertEquals(1, mockCriptor.decryptCallCount, "Deve aver tentato di decifrare");
     }
 
 
@@ -152,6 +157,7 @@ class WalletManagerTest {
 
     /**
      * Mock di ICriptor che traccia le chiamate.
+     * MODIFICATO: Ora supporta un comportamento di decrypt personalizzato.
      */
     static class MockCriptor implements ICriptor {
         int encryptCallCount = 0;
@@ -162,6 +168,9 @@ class WalletManagerTest {
         // Simula la trasformazione
         Entry plaintext;
         Entry encrypted;
+
+        // Campo per iniettare comportamento "cattivo"
+        Function<Entry, Entry> decryptBehavior = null;
 
         @Override
         public Entry encrypt(Entry entry) {
@@ -174,7 +183,13 @@ class WalletManagerTest {
         public Entry decrypt(Entry entry) {
             decryptCallCount++;
             lastEntryDecrypted = entry;
-            return plaintext; // Ritorna la versione in chiaro simulata
+
+            // Se un comportamento è stato iniettato, usalo
+            if (decryptBehavior != null) {
+                return decryptBehavior.apply(entry);
+            }
+            // Altrimenti, usa il comportamento di default
+            return plaintext;
         }
     }
 
